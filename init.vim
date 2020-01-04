@@ -35,6 +35,7 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+"---------------------------------------------------------------------------
 " 第三方插件
 let $CACHE = expand('~/.cache')
 if !isdirectory(expand($CACHE))
@@ -57,17 +58,22 @@ call vimrc#source('options.vim')
 call vimrc#source('mappings.vim')
 call vimrc#source('commands.vim')
 
+if has('nvim')
+  call vimrc#source('neovim.vim')
+endif
+
 if vimrc#is_windows()
   call vimrc#source('os/windows.vim')
 else
   call vimrc#source('os/unix.vim')
 endif
 
-"---------------------------------------------------------------------------
-" other
-color janah
+
 
 "---------------------------------------------------------------------------
+" other
+" color janah
+
 " END
 set secure
 

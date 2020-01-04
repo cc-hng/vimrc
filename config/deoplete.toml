@@ -32,10 +32,10 @@ hook_source = '''
 lua << EOF
   local lsp = require 'nvim_lsp'
   local root_pattern = function(...)
-	local old_f = lsp.util.root_pattern(...)
-	return function(startpath)
-	  return old_f(startpath) or vim.fn.fnamemodify(filepath, ':h')
-	end
+    local old_f = lsp.util.root_pattern(...)
+    return function(startpath)
+      return old_f(startpath) or vim.fn.fnamemodify(filepath, ':h')
+    end
   end
 
   -- rust
@@ -76,4 +76,3 @@ EOF
   nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 
 '''
-
