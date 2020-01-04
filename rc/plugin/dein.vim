@@ -14,16 +14,14 @@ endif
 let s:dein_toml 	 = vimrc#expand('config/dein.toml')
 let s:dein_lazy_toml = vimrc#expand('config/deinlazy.toml')
 let s:dein_ft_toml 	 = vimrc#expand('config/deinft.toml')
-let s:deoplete_toml  = vimrc#expand('config/deoplete.toml')
-let s:denite_toml	 = vimrc#expand('config/denite.toml')
 
 " begin {{{
-call dein#begin(s:path, [ expand('<sfile>') ])
+call dein#begin(s:path, [ 
+	  \ expand('<sfile>'), s:dein_toml, s:dein_lazy_toml, s:dein_ft_toml
+	  \ ])
 
 call dein#load_toml(s:dein_toml, {'lazy': 0})
 call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
-call dein#load_toml(s:deoplete_toml, {'lazy': 1})
-call dein#load_toml(s:denite_toml, {'lazy': 1})
 call dein#load_toml(s:dein_ft_toml)
 
 let s:vimrc_local = findfile('vimrc_local.vim', '.;')

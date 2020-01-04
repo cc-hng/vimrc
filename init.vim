@@ -69,10 +69,9 @@ else
 endif
 
 
-
 "---------------------------------------------------------------------------
 " other
-" color janah
+color janah
 
 " END
 set secure
