@@ -1,0 +1,76 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+# A solid language pack for Vim.
+# syntax,compiler,indent,autoload,ftplugin
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+hook_add = '''
+let g:polyglot_disabled = ['markdown', 'tsx', 'typescript', 'csv']
+'''
+
+# Yet Another TypeScript Syntax
+[[plugins]]
+repo = 'HerringtonDarkholme/yats.vim'
+
+# Folding setting for diff
+[[plugins]]
+repo = 'thinca/vim-ft-diff_fold'
+
+# Folding setting for help
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+
+# Text Formatting Plugin
+[[plugins]]
+repo = 'vim-jp/autofmt'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+
+# test framework
+[[plugins]]
+repo = 'thinca/vim-themis'
+
+# A CtrlP matcher, specialized for paths.
+# [[plugins]]
+# repo = 'nixprime/cpsm'
+# build = 'sh -c "PY3=ON ./install.sh"'
+
+# Advanced syntax highlighting for GNU As
+[[plugins]]
+repo = 'Shirk/vim-gas'
+
+# Official Vim Runtime Files for Zsh
+[[plugins]]
+repo = 'chrisbra/vim-zsh'
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if = '!has("nvim")'
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+
+[[plugins]]
+repo = 'xolox/vim-misc'
+
+# [[plugins]]
+# repo = 'Shougo/deoppet.nvim'
+
+[[plugins]]
+repo = 'mhinz/vim-janah'
+
+[[plugins]]
+repo = 'challenger-deep-theme/vim'
+
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# build = './install.sh'
+
