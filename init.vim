@@ -71,7 +71,7 @@ endif
 
 "---------------------------------------------------------------------------
 " other
-color janah
+color candy
 
 " END
 set secure

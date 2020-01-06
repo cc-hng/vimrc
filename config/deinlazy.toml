@@ -40,16 +40,13 @@ depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_source = '''
-  imap <silent>L     <Plug>(neosnippet_jump_or_expand)
-  smap <silent>L     <Plug>(neosnippet_jump_or_expand)
-  xmap <silent>L     <Plug>(neosnippet_expand_target)
+  " imap <silent>L     <Plug>(neosnippet_jump_or_expand)
+  " smap <silent>L     <Plug>(neosnippet_jump_or_expand)
+  " xmap <silent>L     <Plug>(neosnippet_expand_target)
 
   let g:neosnippet#enable_snipmate_compatibility = 1
   let g:neosnippet#enable_completed_snippet = 1
-  " let g:neosnippet#enable_complete_done = 1
   let g:neosnippet#expand_word_boundary = 1
-
-  " let g:snippets_dir = '~/.vim/snippets/,~/.vim/bundle/snipmate/snippets/'
   let g:neosnippet#snippets_directory = '~/.vim/snippets'
 '''
 
@@ -309,10 +306,6 @@ repo = 'kana/vim-smartchr'
 on_event = 'InsertCharPre'
 hook_source = '''
   inoremap <expr> , smartchr#one_of(', ', ',')
-  inoremap <expr> =
-        \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')? '<bs>= '
-        \ : search('\(*\<bar>!\)\%#', 'bcn') ? '= '
-        \ : smartchr#one_of(' = ', '=', ' == ')
   augroup MyAutoCmd
     " Substitute .. into -> .
     autocmd FileType c,cpp inoremap <buffer> <expr> .
@@ -372,13 +365,6 @@ repo = 'raghur/fruzzy'
 on_source = ['denite.nvim']
 hook_source = 'let g:fruzzy#sortonempty = 0'
 hook_post_update = 'call fruzzy#install()'
-
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
-hook_source = '''
-let g:go_def_mapping_enabled = 0
-'''
 
 [[plugins]]
 repo = 'ncm2/float-preview.nvim'

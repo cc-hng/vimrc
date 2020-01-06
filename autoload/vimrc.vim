@@ -109,6 +109,17 @@ function! vimrc#on_filetype() abort
   endif
 endfunction
 
-function! vimrc#project_dir(root_patterns) abort
-  return luaeval('(require "utils").find_root_dir(0, _A)', a:root_patterns)
+" 自动格式化
+function! vimrc#auto_format() abort
+  " 非lsp不格式化
+  if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients())")
+    " Note: lsp是异步调用，暂时不知道回调方法
+    " 零时方案: sleep 30ms
+    lua vim.lsp.buf.formatting()
+    sleep 30m
+    if &modified
+      silent! write
+    endif
+  endif
 endfunction
+
