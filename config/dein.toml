@@ -63,6 +63,6 @@ repo = 'challenger-deep-theme/vim'
 # [[plugins]]
 # repo = 'Shougo/deoppet.nvim'
 
-# [[plugins]]
-# repo = 'tbodt/deoplete-tabnine'
-# build = './install.sh'
+[[plugins]]
+repo = 'tbodt/deoplete-tabnine'
+build = './install.sh'
