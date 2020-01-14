@@ -56,8 +56,8 @@ highlight DiffText     term=reverse cterm=NONE ctermbg=132 ctermfg=213
       \ gui=NONE guibg=#802860 guifg=#ff78f0
 
 " Cursor
-highlight Cursor       term=NONE cterm=NONE ctermbg=241 ctermfg=fg
-      \ gui=NONE guibg=#606060 guifg=fg
+" highlight Cursor       term=NONE cterm=NONE ctermbg=241 ctermfg=fg
+"      \ gui=NONE guibg=#606060 guifg=fg
 highlight CursorLine   term=underline cterm=NONE ctermbg=238 ctermfg=fg
       \ gui=NONE guibg=#444444 guifg=fg
 highlight lCursor      term=NONE cterm=NONE ctermbg=131 ctermfg=fg

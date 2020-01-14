@@ -1,6 +1,4 @@
 
-
-
 "------------------------------------------------------------------------------
 " Autocmd
 autocmd MyAutoCmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
@@ -18,7 +16,7 @@ autocmd MyAutoCmd BufReadPost *
 
 " 自动保存
 " autocmd MyAutoCmd FocusLost * silent! wa
-autocmd MyAutoCmd FocusLost * echomsg "focus lost"
+autocmd MyAutoCmd FocusLost * silent! wa
 
 " 自动格式化
 autocmd MyAutoCmd BufWritePre * call vimrc#auto_format()
