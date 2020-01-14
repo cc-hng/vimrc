@@ -40,9 +40,9 @@ depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_source = '''
-  " imap <silent>L     <Plug>(neosnippet_jump_or_expand)
-  " smap <silent>L     <Plug>(neosnippet_jump_or_expand)
-  " xmap <silent>L     <Plug>(neosnippet_expand_target)
+  imap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
+  smap <silent><C-k>     <Plug>(neosnippet_jump_or_expand)
+  xmap <silent><C-k>     <Plug>(neosnippet_expand_target)
 
   let g:neosnippet#enable_snipmate_compatibility = 1
   let g:neosnippet#enable_completed_snippet = 1
@@ -114,7 +114,7 @@ denite = '''
   nnoremap <silent><buffer><expr> q     denite#do_map('quit')
   nnoremap <silent><buffer><expr> i     denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
-  nnoremap <silent><buffer><expr> r     denite#do_map('do_action', 'quickfix')
+  " nnoremap <silent><buffer><expr> r     denite#do_map('do_action', 'quickfix')
 '''
 
 [[plugins]]
