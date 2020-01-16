@@ -81,7 +81,7 @@ call deoplete#custom#option('keyword_patterns', {
 
 call deoplete#custom#option({
       \ 'auto_refresh_delay': 10,
-      \ 'skip_chars': ['(', ')', '{', '}', ';', ',', '[', ']'],
+      \ 'skip_chars': ['(', ')', '{', '}', ';', ',', '[', ']', '!', '#', '*', '&'],
       \ 'camel_case': v:true,
       \ 'skip_multibyte': v:true,
       \ 'prev_completion_mode': 'length',

@@ -18,9 +18,6 @@ autocmd MyAutoCmd BufReadPost *
 " autocmd MyAutoCmd FocusLost * silent! wa
 autocmd MyAutoCmd FocusLost * silent! wa
 
-" 自动格式化
-autocmd MyAutoCmd BufWritePre * call vimrc#auto_format()
-
 
 "------------------------------------------------------------------------------
 " Commands
