@@ -1,45 +1,53 @@
+# 插件管理器
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# A solid language pack for Vim.
+# (syntax, indent, autoload, ftplugin)
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
 hook_add = '''
 let g:polyglot_disabled = ['markdown', 'tsx', 'typescript', 'csv', 'rust']
 '''
 
+# Yet Another TypeScript Syntax
 [[plugins]]
 repo = 'HerringtonDarkholme/yats.vim'
+#
+# # Folding setting for diff.
+# [[plugins]]
+# repo = 'thinca/vim-ft-diff_fold'
+#
+# # Folding setting for help.
+# [[plugins]]
+# repo = 'thinca/vim-ft-help_fold'
+#
+# # Text Formatting Plugin
+# [[plugins]]
+# repo = 'vim-jp/autofmt'
+#
+# [[plugins]]
+# repo = 'kana/vim-textobj-user'
+#
+# [[plugins]]
+# repo = 'kana/vim-operator-user'
 
-[[plugins]]
-repo = 'thinca/vim-ft-diff_fold'
-
-[[plugins]]
-repo = 'thinca/vim-ft-help_fold'
-
-[[plugins]]
-repo = 'vim-jp/autofmt'
-
-[[plugins]]
-repo = 'kana/vim-textobj-user'
-
-[[plugins]]
-repo = 'kana/vim-operator-user'
-
+# markdown
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
 
-[[plugins]]
-repo = 'JesseKPhillips/d.vim'
-
+# vim 测试框架
 [[plugins]]
 repo = 'thinca/vim-themis'
 
+## CTRLP matcher
 # [[plugins]]
 # repo = 'nixprime/cpsm'
 # build = 'sh -c "PY3=ON ./install.sh"'
 
-[[plugins]]
-repo = 'Shirk/vim-gas'
+## ASM
+# [[plugins]]
+# repo = 'Shirk/vim-gas'
 
 [[plugins]]
 repo = 'chrisbra/vim-zsh'
@@ -56,6 +64,21 @@ repo = 'mhinz/vim-janah'
 
 [[plugins]]
 repo = 'challenger-deep-theme/vim'
+
+[[plugins]]
+repo = 'rakr/vim-one'
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+repo = 'sickill/vim-monokai'
+
+[[plugins]]
+repo = 'drewtempelmeyer/palenight.vim'
+
+[[plugins]]
+repo = 'ayu-theme/ayu-vim'
 
 # [[plugins]]
 # repo = 'Shougo/deoppet.nvim'
