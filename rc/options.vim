@@ -126,7 +126,7 @@ set virtualedit=block
 set keywordprg=:help
 
 " Disable paste.
-autocmd MyAutoCmd InsertLeave *
+autocmd MyAutoCmd InsertEnter *
       \ if &paste | setlocal nopaste | echo 'nopaste' | endif |
       \ if &l:diff | diffupdate | endif
 

@@ -33,7 +33,6 @@ call deoplete#custom#source('_', 'matchers',
       \ ['matcher_fuzzy', 'matcher_length'])
 call deoplete#custom#source('denite', 'matchers',
       \ ['matcher_full_fuzzy', 'matcher_length'])
-" call deoplete#custom#source('eskk,tabnine', 'matchers', [])
 call deoplete#custom#source('eskk', 'matchers', [])
 " call deoplete#custom#source('buffer', 'mark', '')
 " call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
@@ -44,15 +43,16 @@ call deoplete#custom#option('ignore_sources', {
       \ '_': ['around', 'buffer'],
       \ })
 
-call deoplete#custom#source('tabnine', 'rank', 300)
-call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
+call deoplete#custom#source('tabnine', 'matchers', [])
+call deoplete#custom#source('tabnine', 'rank', 100)
+call deoplete#custom#source('tabnine', 'min_pattern_length', 3)
 " call deoplete#custom#source('tabnine', 'is_volatile', v:false)
 call deoplete#custom#var('tabnine', {
       \ 'line_limit': 500,
       \ 'max_num_results': 20,
       \ })
 
-call deoplete#custom#source('zsh', 'filetypes', ['zsh', 'sh'])
+" call deoplete#custom#source('zsh', 'filetypes', ['zsh', 'sh'])
 
 call deoplete#custom#source('_', 'converters', [
       \ 'converter_remove_paren',
@@ -66,9 +66,9 @@ call deoplete#custom#source('tabnine', 'converters', [
       \ 'converter_remove_overlap',
       \ 'converter_truncate_info',
       \ ])
-call deoplete#custom#source('eskk', 'converters', [])
+" call deoplete#custom#source('eskk', 'converters', [])
 
-" call deoplete#custom#source('buffer', 'min_pattern_length', 9999)
+call deoplete#custom#source('buffer', 'min_pattern_length', 9999)
 " call deoplete#custom#source('clang', 'input_pattern', '\.\w*|\.->\w*|\w+::\w*')
 " call deoplete#custom#source('clang', 'max_pattern_length', -1)
 

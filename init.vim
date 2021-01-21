@@ -71,7 +71,10 @@ endif
 
 "---------------------------------------------------------------------------
 " other
-color candy
+" color candy
+" color janah
+" color desert
+color challenger_deep
 
 " END
 set secure

@@ -49,8 +49,8 @@ repo = 'thinca/vim-themis'
 # [[plugins]]
 # repo = 'Shirk/vim-gas'
 
-[[plugins]]
-repo = 'chrisbra/vim-zsh'
+# [[plugins]]
+# repo = 'chrisbra/vim-zsh'
 
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
@@ -59,6 +59,7 @@ on_if = '!has("nvim")'
 [[plugins]]
 repo = 'roxma/nvim-yarp'
 
+## themes
 [[plugins]]
 repo = 'mhinz/vim-janah'
 
@@ -80,9 +81,7 @@ repo = 'drewtempelmeyer/palenight.vim'
 [[plugins]]
 repo = 'ayu-theme/ayu-vim'
 
-# [[plugins]]
-# repo = 'Shougo/deoppet.nvim'
-
 [[plugins]]
 repo = 'tbodt/deoplete-tabnine'
 build = './install.sh'
+

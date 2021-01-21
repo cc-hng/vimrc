@@ -1,6 +1,6 @@
 
 lua << EOF
-  local lsp = require 'nvim_lsp'
+  local lsp = require 'lspconfig'
   local root_pattern = function(...)
     local old_f = lsp.util.root_pattern(...)
     return function(startpath)

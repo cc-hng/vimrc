@@ -6,7 +6,7 @@ autocmd MyAutoCmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
 autocmd MyAutoCmd CursorHold *.toml syntax sync minlines=300
 
 " Gnu Indent
-autocmd MyAutoCmd FileType vim,yaml,toml call GnuIndent()
+" autocmd MyAutoCmd FileType vim,yaml,toml call GnuIndent()
 
 " 自动保存上次编辑位置
 autocmd MyAutoCmd BufReadPost *
@@ -14,10 +14,11 @@ autocmd MyAutoCmd BufReadPost *
      \ | if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif |
      \ endif
 
+" autocmd MyAutoCmd BufReadPost * set paste
+
 " 自动保存
 " autocmd MyAutoCmd FocusLost * silent! wa
 autocmd MyAutoCmd FocusLost * silent! wa
-
 
 "------------------------------------------------------------------------------
 " Commands

@@ -12,9 +12,21 @@ call echodoc#enable()
 '''
 
 [[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+on_event = 'FileType'
+
+# [[plugins]]
+# repo = 'Shougo/echodoc.vim'
+# on_event = 'CompleteDone'
+# hook_source = '''
+# let g:echodoc#type = 'virtual'
+# call echodoc#enable()
+# '''
+
+[[plugins]]
 repo = 'Shougo/defx.nvim'
 hook_add = '''
-nnoremap <silent>   [Space]f
+nnoremap <silent>   ;d
 \ :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
 '''
 hook_source = '''
@@ -54,6 +66,11 @@ hook_source = '''
 repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
+repo = 'puremourning/vimspector'
+hook_add = '''
+'''
+
+[[plugins]]
 repo = 'Shougo/denite.nvim'
 on_cmd = 'Denite'
 hook_source = ' execute "source" vimrc#expand("rc/plugin/denite.vim") '
@@ -74,8 +91,9 @@ hook_add = '''
   "\ ":\<C-u>Denite -buffer-name=search -resume -refresh -no-start-filter\<CR>"
   "nnoremap <expr> * line('$') > 10000 ? '*' :
   "\ ":\<C-u>DeniteCursorWord -buffer-name=search line\<CR>"
+  nnoremap <silent> <Space>' :<C-u>Denite -buffer-name=search -resume -refresh -no-start-filter<CR>
   nnoremap <silent> [Window]s :<C-u>Denite -split=vertical buffer<CR>
-  nnoremap <silent> [Window]p :<C-u>Denite -split=no file/point file/old
+  nnoremap <silent> [Window]p :<C-u>Denite -split=vertical file/point
         \ -sorters=sorter/rank
         \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
         \ file file:new<CR>
@@ -124,11 +142,10 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'Shougo/deol.nvim'
 on_source = 'denite.nvim'
 hook_add = '''
-  nnoremap <silent> [Space]` :<C-u>Deol
-	  \ -split=vertical zsh -start-insert<CR>
+  nnoremap <silent> [Space]` :<C-u>Deol -split=floating fish -start-insert<CR>
   nnoremap <silent> <C-n> :<C-u>call deol#new(
-  \ {'command': 'zsh', 'start_insert': 0})<CR>
-  " nnoremap <silent> [Space]s :<C-u>Deol xonsh<CR>
+  \ {'command': 'fish', 'start_insert': 0})<CR>
+  nnoremap <silent> [Space]s :<C-u>Deol xonsh<CR>
   nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
 '''
 hook_source = ' execute "source" vimrc#expand("rc/plugin/deol.vim") '
@@ -305,7 +322,7 @@ repo = 'lambdalisue/vim-findent'
 repo = 'kana/vim-smartchr'
 on_event = 'InsertCharPre'
 hook_source = '''
-  inoremap <expr> , smartchr#one_of(', ', ',')
+  " inoremap <expr> , smartchr#one_of(', ', ',')
   augroup MyAutoCmd
     " Substitute .. into -> .
     autocmd FileType c,cpp inoremap <buffer> <expr> .
@@ -341,19 +358,6 @@ nnoremap <silent><buffer> ,r  :<C-u>VimhelpLint!<CR>
 '''
 
 [[plugins]]
-repo = 'zchee/deoplete-zsh'
-on_ft = ['zsh', 'sh']
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-on_event = 'InsertEnter'
-hook_source = '''
-  execute "source" vimrc#expand("rc/plugin/deoplete.vim")
-  call deoplete#enable()
-'''
-
-[[plugins]]
 repo = 'lambdalisue/suda.vim'
 on_event = 'BufRead'
 hook_add = '''
@@ -366,11 +370,21 @@ on_source = ['denite.nvim']
 hook_source = 'let g:fruzzy#sortonempty = 0'
 hook_post_update = 'call fruzzy#install()'
 
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+  execute "source" vimrc#expand("rc/plugin/deoplete.vim")
+  call deoplete#enable()
+'''
+
 [[plugins]]
 repo = 'ncm2/float-preview.nvim'
 on_source = 'deoplete.nvim'
 if = 'has("nvim")'
-hook_source = '''
+hook_add = '''
 let g:float_preview#docked = 0
 let g:float_preview#max_width = 60
 let g:float_preview#max_height = 20
@@ -381,7 +395,7 @@ repo = 'Shougo/deoplete-lsp'
 on_source = 'deoplete.nvim'
 
 [[plugins]]
-repo = 'neovim/nvim-lsp'
+repo = 'neovim/nvim-lspconfig'
 if = 'has("nvim")'
 on_event = 'FileType'
 hook_add = '''
@@ -392,9 +406,7 @@ hook_add = '''
   nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
   nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
   nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-
   " 自动格式化
-  autocmd MyAutoCmd BufWritePre * call vimrc#auto_format()
+  " autocmd MyAutoCmd BufWritePre * call vimrc#auto_format()
 '''
 hook_source = ' execute "source" vimrc#expand("rc/plugin/lsp.vim") '
-
