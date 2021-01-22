@@ -42,7 +42,7 @@ lua << EOF
       buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     end
 
-    -- Set autocommands conditional on server_capabilities
+    ---- Set autocommands conditional on server_capabilities
     -- if client.resolved_capabilities.document_highlight then
     --   require('lspconfig').util.nvim_multiline_command [[
     --     :hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
@@ -75,6 +75,7 @@ lua << EOF
 
   -- c/c++
   nvim_lsp.clangd.setup {
+    cmd = {"clangd", "--background-index", "--fallback-style=webkit"};
     -- root_dir = root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
     on_attach = function(client, bufnr)
       local opts = { noremap=true, silent=true }
