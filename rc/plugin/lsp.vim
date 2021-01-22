@@ -1,6 +1,7 @@
 
 lua << EOF
-  local lsp = require 'lspconfig'
+  local nvim_lsp = require 'lspconfig'
+
   local root_pattern = function(...)
     local old_f = lsp.util.root_pattern(...)
     return function(startpath)
@@ -10,52 +11,76 @@ lua << EOF
     end
   end
 
-  -- rust
-  lsp.rls.setup {
-    cmd = {'rls'},
-    filetypes = {'rust'},
-    root_dir = root_pattern('Cargo.toml'),
-    on_attach = function() vim.api.nvim_err_writeln("rls started.") end
-  }
+  local on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  -- go
-  lsp.gopls.setup {
-    cmd = {'gopls'},
-    filetypes = {'go'},
-    root_dir = root_pattern('go.mod', '.git'),
-    on_attach = function() vim.api.nvim_err_writeln("gopls started.") end
-  }
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- lua
-  lsp.sumneko_lua.setup {
-    filetypes = {'lua'},
-    root_dir = root_pattern('.git'),
-    on_attach = function() vim.api.nvim_err_writeln("lua lsp started.") end
-  }
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+
+    -- Set some keybinds conditional on server capabilities
+    if client.resolved_capabilities.document_formatting then
+      buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    elseif client.resolved_capabilities.document_range_formatting then
+      buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    end
+
+    -- Set autocommands conditional on server_capabilities
+    -- if client.resolved_capabilities.document_highlight then
+    --   require('lspconfig').util.nvim_multiline_command [[
+    --     :hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+    --     :hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+    --     :hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+    --     augroup lsp_document_highlight
+    --       autocmd!
+    --       autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+    --       autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+    --     augroup END
+    --   ]]
+    -- end
+
+    vim.api.nvim_err_writeln("lsp started.")
+  end
+
+  -- Use a loop to conveniently both setup defined servers 
+  -- and map buffer local keybindings when the language server attaches
+  local servers = {
+    "pyright",
+    "rust_analyzer",
+    "cmake",
+    -- "clangd",
+    "gopls",
+    "cssls",
+    "tsserver" }
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup { on_attach = on_attach }
+  end
 
   -- c/c++
-  lsp.clangd.setup {
-    cmd = { "clangd", "--background-index" },
-    filetypes = {"c", "cpp", "objc", "objcpp"},
-    root_dir = root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-    on_attach = function() vim.api.nvim_err_writeln("clangd started.") end
+  nvim_lsp.clangd.setup {
+    -- root_dir = root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+    on_attach = function(client, bufnr)
+      local opts = { noremap=true, silent=true }
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<F4>', '<cmd>ClangdSwitchSourceHeader<CR>', opts)
+      on_attach(client, bufnr)
+    end
   }
-
-  -- ts / js
-  lsp.tsserver.setup {
-    cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-    root_dir = root_pattern("package.json", ".git"),
-    on_attach = function() vim.api.nvim_err_writeln("tsserver started.") end
-  }
-
-  -- css
-  lsp.cssls.setup {
-    cmd = { "css-languageserver", "--stdio" },
-    filetypes = { "css", "scss", "less" },
-    root_dir = root_pattern("package.json", ".git"),
-    on_attach = function() vim.api.nvim_err_writeln("cssls started.") end
-  }
-
 
 EOF
