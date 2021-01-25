@@ -68,7 +68,7 @@ call deoplete#custom#source('tabnine', 'converters', [
       \ ])
 " call deoplete#custom#source('eskk', 'converters', [])
 
-call deoplete#custom#source('buffer', 'min_pattern_length', 9999)
+call deoplete#custom#source('buffer', 'min_pattern_length', 3)
 " call deoplete#custom#source('clang', 'input_pattern', '\.\w*|\.->\w*|\w+::\w*')
 " call deoplete#custom#source('clang', 'max_pattern_length', -1)
 
@@ -80,11 +80,12 @@ call deoplete#custom#option('keyword_patterns', {
 " inoremap <silent><expr> <C-t> deoplete#manual_complete('file')
 
 call deoplete#custom#option({
-      \ 'auto_refresh_delay': 10,
+      \ 'auto_refresh_delay': 20,
       \ 'skip_chars': ['(', ')', '{', '}', ';', ',', '[', ']', '!', '#', '*', '&'],
       \ 'camel_case': v:true,
+      \ 'min_pattern_length': 1,
       \ 'skip_multibyte': v:true,
-      \ 'prev_completion_mode': 'length',
+      "\ 'prev_completion_mode': 'length',
       \ 'auto_preview': v:true,
       \ })
 " call deoplete#custom#option('num_processes', 0)
@@ -104,3 +105,10 @@ call deoplete#custom#option({
  " Go autocomplete
  " call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
+
+" set completeopt+=noselect
+" call deoplete#custom#option('omni_patterns', {
+" \ 'c': ['[^. *\t]\%(\.\|->\)\w*'],
+" \ 'cpp': ['[^. *\t]\%(\.\|->\)\w*', '[a-zA-Z_]\w*::'],
+" \ })
+" 

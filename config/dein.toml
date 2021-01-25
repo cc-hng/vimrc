@@ -81,6 +81,9 @@ repo = 'drewtempelmeyer/palenight.vim'
 [[plugins]]
 repo = 'ayu-theme/ayu-vim'
 
+[[plugins]]
+repo = 'rafi/awesome-vim-colorschemes'
+
 # [[plugins]]
 # repo = 'tbodt/deoplete-tabnine'
 # build = './install.sh'
