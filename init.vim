@@ -73,7 +73,6 @@ endif
 " other
 " color candy
 " color janah
-" color desert
 " color challenger_deep
 color wombat256mod
 
