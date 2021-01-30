@@ -41,9 +41,9 @@ repo = 'rcmdnk/vim-markdown'
 repo = 'thinca/vim-themis'
 
 ## CTRLP matcher
-# [[plugins]]
-# repo = 'nixprime/cpsm'
-# build = 'sh -c "PY3=ON ./install.sh"'
+[[plugins]]
+repo = 'nixprime/cpsm'
+build = 'sh -c "PY3=ON ./install.sh && cp build/cpsm_py.so bin/cpsm_py.so"'
 
 ## ASM
 # [[plugins]]
@@ -87,6 +87,9 @@ repo = 'rafi/awesome-vim-colorschemes'
 # [[plugins]]
 # repo = 'tbodt/deoplete-tabnine'
 # build = './install.sh'
+
+[[plugins]]
+repo = 'kurkale6ka/vim-desertEX'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'

@@ -74,7 +74,9 @@ endif
 " color candy
 " color janah
 " color challenger_deep
-color wombat256mod
+" color wombat256mod
+
+color desertEX
 
 " END
 set secure

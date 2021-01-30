@@ -26,11 +26,11 @@ function! s:my_cr_function() abort
 endfunction
 
 " cpsm test
-" call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
-" call deoplete#custom#source('_', 'sorters', [])
+call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
+call deoplete#custom#source('_', 'sorters', [])
 
-call deoplete#custom#source('_', 'matchers',
-      \ ['matcher_fuzzy', 'matcher_length'])
+" call deoplete#custom#source('_', 'matchers',
+"      \ ['matcher_fuzzy'])
 call deoplete#custom#source('denite', 'matchers',
       \ ['matcher_full_fuzzy', 'matcher_length'])
 call deoplete#custom#source('eskk', 'matchers', [])
@@ -40,7 +40,7 @@ call deoplete#custom#source('eskk', 'matchers', [])
 " call deoplete#custom#source('buffer', 'mark', '*')
 
 call deoplete#custom#option('ignore_sources', {
-      \ '_': ['around', 'buffer'],
+      \ '_': ['buffer'],
       \ })
 
 call deoplete#custom#source('tabnine', 'matchers', [])
@@ -85,7 +85,7 @@ call deoplete#custom#option({
       \ 'camel_case': v:true,
       \ 'min_pattern_length': 1,
       \ 'skip_multibyte': v:true,
-      "\ 'prev_completion_mode': 'length',
+      \ 'prev_completion_mode': 'length',
       \ 'auto_preview': v:true,
       \ })
 " call deoplete#custom#option('num_processes', 0)
