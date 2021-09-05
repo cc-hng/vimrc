@@ -10,8 +10,8 @@ set smartcase
 
 " Enable incremental search.
 set incsearch
-" Highlight search result.
-set hlsearch
+" Don't highlight search result.
+set nohlsearch
 
 " Searches wrap around the end of the file.
 set wrapscan
@@ -26,7 +26,7 @@ set smarttab
 " Exchange tab to spaces.
 set expandtab
 " Substitute <Tab> with blanks.
-set tabstop=4
+" set tabstop=8
 " Spaces instead <Tab>.
 " set softtabstop=4
 " Autoindent width.
@@ -40,8 +40,8 @@ set autoindent smartindent
 function! GnuIndent()
   setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
   setlocal shiftwidth=2
-  setlocal tabstop=4
-  setlocal expandtab
+  setlocal tabstop=8
+  setlocal noexpandtab
 endfunction
 
 " Disable modeline.
@@ -51,7 +51,7 @@ autocmd MyAutoCmd BufRead,BufWritePost *.txt setlocal modelines=5 modeline
 
 " Use clipboard register.
 
-if (!has('nvim') || $DISPLAY != '') && has('clipboard')
+if (!has('nvim') || $DISPLAY !=# '') && has('clipboard')
   if has('unnamedplus')
      set clipboard& clipboard+=unnamedplus
   else
@@ -60,7 +60,11 @@ if (!has('nvim') || $DISPLAY != '') && has('clipboard')
 endif
 
 " Enable backspace delete indent and newline.
-set backspace=indent,eol,start
+if has('patch-8.2.0592')
+  set backspace=indent,eol,nostop
+else
+  set backspace=indent,eol,start
+endif
 
 " Highlight <>.
 set matchpairs+=<:>
@@ -72,12 +76,16 @@ set hidden
 " But can't complete.
 "  set cdpath+=~
 
-" Enable folding.
-set foldenable
-set foldmethod=indent
+" Disable folding.
+set nofoldenable
+set foldmethod=manual
+set foldlevel=3
 " Show folding level.
-set foldcolumn=1
-set foldlevel=4
+if has('nvim-0.5')
+  set foldcolumn=auto:1
+else
+  set foldcolumn=1
+endif
 set fillchars=vert:\|
 set commentstring=%s
 
@@ -126,7 +134,7 @@ set virtualedit=block
 set keywordprg=:help
 
 " Disable paste.
-autocmd MyAutoCmd InsertEnter *
+autocmd MyAutoCmd InsertLeave *
       \ if &paste | setlocal nopaste | echo 'nopaste' | endif |
       \ if &l:diff | diffupdate | endif
 
@@ -144,7 +152,7 @@ endif
 autocmd MyAutoCmd BufWritePre *
       \ call s:mkdir_as_necessary(expand('<afile>:p:h'), v:cmdbang)
 function! s:mkdir_as_necessary(dir, force) abort
-  if !isdirectory(a:dir) && &l:buftype == '' &&
+  if !isdirectory(a:dir) && &l:buftype ==# '' &&
         \ (a:force || input(printf('"%s" does not exist. Create? [y/N]',
         \              a:dir)) =~? '^y\%[es]$')
     call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
@@ -164,8 +172,11 @@ set formatexpr=autofmt#japanese#formatexpr()
 " If true Vim master, use English help file.
 set helplang& helplang=en,ja
 
-" Default home directory.
-let t:cwd = getcwd()
+" Default fileformat.
+set fileformat=unix
+" Automatic recognition of a new line cord.
+set fileformats=unix,dos,mac
+
 
 "---------------------------------------------------------------------------
 " View:
@@ -175,13 +186,13 @@ let t:cwd = getcwd()
 "set number
 " Show <TAB> and <CR>
 set list
-if vimrc#is_windows()
+if has('win32') || has('win64')
    set listchars=tab:>-,trail:-,precedes:<
 else
-   set listchars=tab:>\ ,trail:-,precedes:«,nbsp:%
+   set listchars=tab:▸\ ,trail:-,precedes:«,nbsp:%
 endif
-" Always display statusline.
-set laststatus=2
+" Always disable statusline.
+set laststatus=0
 " Height of command line.
 set cmdheight=1
 " Not show command on statusline.
@@ -191,51 +202,29 @@ set title
 " Title length.
 set titlelen=95
 " Title string.
-let &g:titlestring="
-      \ %{expand('%:p:~:.')}%(%m%r%w%)
-      \ %<\(%{fnamemodify(getcwd(), ':~')}\) - VIM"
+let &g:titlestring = "
+      \ %(%m%r%w%)%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)"
 " Disable tabline.
 set showtabline=0
 
 " Set statusline.
-let &g:statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
-      \ . ".(winnr('#')==winnr()?'#':'').']':''}\ "
-      \ . "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
-      \ . "\ %=%{(winnr('$')==1 || winnr('#')!=winnr()) ?
-      \ '['.(&filetype!=''?&filetype.',':'')"
-      \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
-      \ . "%m%{printf('%'.(len(line('$'))+2).'d/%d',line('.'),line('$'))}"
+let &g:statusline = " %=%{printf('%'.(len(line('$'))+2).'d/%d',line('.'),line('$'))}"
 
+" Note: wrap option is very slow!
+set nowrap
 " Turn down a long line appointed in 'breakat'
 set linebreak
 set showbreak=\
 set breakat=\ \	;:,!?
 " Wrap conditions.
 set whichwrap+=h,l,<,>,[,],b,s,~
-if exists('+breakindent')
-  set breakindent
-  set wrap
-else
-  set nowrap
-endif
+set breakindent
 
 " Do not display the greetings message at the time of Vim start.
-set shortmess=aTI
-
 " Do not display the completion messages
-set noshowmode
-if has('patch-7.4.314')
-  set shortmess+=c
-else
-  autocmd MyAutoCmd VimEnter *
-        \ highlight ModeMsg guifg=bg guibg=bg |
-        \ highlight Question guifg=bg guibg=bg
-endif
-
 " Do not display the edit messages
-if has('patch-7.4.1570')
-  set shortmess+=F
-endif
+set shortmess=aTIcF
+set noshowmode
 
 " Don't create backup.
 set nowritebackup
@@ -266,9 +255,9 @@ set showfulltag
 set wildoptions+=tagfile
 
 if has('nvim')
-  set shada=!,'300,<50,s10,h
+  set shada=!,'100,<20,s10,h
 else
-  set viminfo=!,'300,<50,s10,h
+  set viminfo=!,'100,<20,s10,h
 endif
 
 " Disable menu
@@ -276,10 +265,18 @@ let g:did_install_default_menus = 1
 
 " Completion setting.
 set completeopt=menuone
+if exists('+completepopup')
+  set completeopt+=popup
+  set completepopup=height:4,width:60,highlight:InfoPopup
+endif
 " Don't complete from other buffer.
 set complete=.
 " Set popup menu max height.
-set pumheight=20
+set pumheight=10
+if exists('+pumwidth')
+  " Set popup menu max width.
+  set pumwidth=10
+endif
 
 " Report changes.
 set report=0
@@ -310,12 +307,16 @@ set ttyfast
 " When a line is long, do not omit it in @.
 set display=lastline
 " Display an invisible letter with hex format.
-"set display+=uhex
+set display+=uhex
 
 " For conceal.
-set conceallevel=2 concealcursor=niv
+set conceallevel=2
 
-set colorcolumn=81
-set showtabline=1
-set scrolloff=5
+set colorcolumn=79
 
+if exists('+previewpopup')
+  set previewpopup=height:10,width:60
+endif
+
+" Disable signcolumn
+set signcolumn=no

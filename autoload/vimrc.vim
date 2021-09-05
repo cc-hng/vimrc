@@ -2,45 +2,6 @@
 " vimrc functions:
 "
 
-let g:vimrc#my=get(g:, 'vimrc#my', expand('~/.config/nvim'))
-
-function! vimrc#is_windows() abort
-  return has('win32') || has('win64')
-endfunction
-
-function! vimrc#is_mac() abort
-  return !vimrc#is_windows() && !has('win32unix')
-          \ && (has('mac') || has('macunix') || has('gui_macvim')
-          \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
-endfunction
-
-function! vimrc#expand(path) abort
-  return expand(g:vimrc#my . '/' . a:path)
-endfunction
-
-function! vimrc#source(path, ...) abort
-  let use_global = get(a:000, 0, !has('vim_starting'))
-  let abspath = resolve(vimrc#expand('rc/' . a:path))
-  if !use_global
-    execute 'source' fnameescape(abspath)
-    return
-  endif
-
-  " substitute all 'set' to 'setglobal'
-  let content = map(readfile(abspath),
-        \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
-  " create tempfile and source the tempfile
-  let tempfile = tempname()
-  try
-    call writefile(content, tempfile)
-    execute 'source' fnameescape(tempfile)
-  finally
-    if filereadable(tempfile)
-      call delete(tempfile)
-    endif
-  endtry
-endfunction
-
 function! vimrc#sticky_func() abort
   let sticky_table = {
         \',' : '<', '.' : '>', '/' : '?',
@@ -56,9 +17,9 @@ function! vimrc#sticky_func() abort
   let char = ''
 
   while 1
-    let char = nr2char(getchar())
+    silent! let char = nr2char(getchar())
 
-    if char =~ '\l'
+    if char =~# '\l'
       let char = toupper(char)
       break
     elseif has_key(sticky_table, char)
@@ -77,7 +38,7 @@ function! vimrc#add_numbers(num) abort
   let prev_line = getline('.')[: col('.')-1]
   let next_line = getline('.')[col('.') :]
   let prev_num = matchstr(prev_line, '\d\+$')
-  if prev_num != ''
+  if prev_num !=# ''
     let next_num = matchstr(next_line, '^\d\+')
     let new_line = prev_line[: -len(prev_num)-1] .
           \ printf('%0'.len(prev_num . next_num).'d',
@@ -96,7 +57,16 @@ function! vimrc#add_numbers(num) abort
 endfunction
 
 function! vimrc#toggle_option(option_name) abort
-  execute 'setlocal' a:option_name.'!'
+  if a:option_name ==# 'laststatus'
+    if &laststatus == 0
+      setlocal laststatus=2
+    else
+      setlocal laststatus=0
+    endif
+  else
+    execute 'setlocal' a:option_name.'!'
+  endif
+
   execute 'setlocal' a:option_name.'?'
 endfunction
 
@@ -109,17 +79,53 @@ function! vimrc#on_filetype() abort
   endif
 endfunction
 
-" 自动格式化
-function! vimrc#auto_format() abort
-  " 非lsp不格式化
-  if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients())")
-    " Note: lsp是异步调用，暂时不知道回调方法
-    " 零时方案: sleep 30ms
-    lua vim.lsp.buf.formatting()
-    sleep 30m
-    if &modified
-      silent! write
-    endif
-  endif
+function! vimrc#visual_paste(direction) range abort
+  let registers = {}
+
+  for name in ['"', '0']
+    let registers[name] = {'type': getregtype(name), 'value': getreg(name)}
+  endfor
+
+  execute 'normal!' a:direction
+
+  for [name, register] in items(registers)
+    call setreg(name, register.value, register.type)
+  endfor
 endfunction
 
+" Todo: support vim-treesitter plugin
+function! vimrc#enable_syntax() abort
+  if has('nvim') && exists(':TSEnableAll')
+    TSBufEnable highlight
+    TSBufEnable context_commentstring
+  endif
+endfunction
+function! vimrc#disable_syntax() abort
+  syntax off
+  if has('nvim') && exists(':TSEnableAll')
+    TSBufDisable highlight
+    TSBufDisable context_commentstring
+  endif
+endfunction
+function! vimrc#check_syntax() abort
+  let max_size = 500000
+  let max_head_size = 10000
+  let max_line = line('$')
+  let fsize = line2byte(max_line + 1)
+  let head_size = line2byte(min([max_line + 1, 5]))
+
+  if fsize <= max_size && head_size <= max_head_size
+    return
+  endif
+
+  let confirm = confirm(printf(
+        \ '"%s" is too large.(%d lines, %s bytes) Enable syntax?',
+        \ bufname('%'), max_line, fsize), "&Yes\n&No", 2)
+  redraw
+
+  if confirm == 1
+    call vimrc#enable_syntax()
+  else
+    call vimrc#disable_syntax()
+  endif
+endfunction
