@@ -12,8 +12,7 @@ return {
     'glepnir/galaxyline.nvim',
     branch = 'main',
     after = 'impatient.nvim',
-    requires = {'kyazdani42/nvim-web-devicons'},
-    config = function() require 'eviline' end,
+    requires = {'kyazdani42/nvim-web-devicons'}, config = function() require 'eviline' end,
   },
 
   -- git 状态显示
@@ -59,5 +58,16 @@ return {
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   },
+
+  -- 主题
+  { 'kurkale6ka/vim-desertEX' },
+  { 'mhinz/vim-janah' },
+  { 'challenger-deep-theme/vim' },
+  { 'rakr/vim-one' },
+  { 'morhetz/gruvbox' },
+  { 'sickill/vim-monokai' },
+  { 'drewtempelmeyer/palenight.vim' },
+  { 'ayu-theme/ayu-vim' },
+  { 'rafi/awesome-vim-colorschemes' },
 
 }

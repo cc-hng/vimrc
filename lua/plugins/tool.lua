@@ -53,10 +53,29 @@ return {
     cmd = { 'Telescope' },
     module = 'telescope',
     hook_add = function ()
+      local g = require 'global'
+      local git_pwd = g.get_git_pwd()
+      if git_pwd then
+        local files_cmd = string.format(
+          [[nnoremap <silent>[Window]p :<C-u>Telescope git_files cwd=%s<CR>]],
+          git_pwd
+        )
+        local grep_cmd = string.format(
+          [[nnoremap <silent><leader>g :<C-u>Telescope live_grep cwd=%s<CR>]],
+          git_pwd
+        )
+        vim.cmd(files_cmd)
+        vim.cmd(grep_cmd)
+      else
+        vim.cmd [[
+          nnoremap <silent>[Window]p :<C-u>Telescope find_files<CR>
+          nnoremap <silent><leader>g :<C-u>Telescope live_grep<CR>
+        ]]
+      end
       vim.cmd [[
         nnoremap <silent>[Window]s :<C-u>Telescope buffers<CR>
-        nnoremap <silent>[Window]p :<C-u>Telescope find_files<CR>
-        nnoremap <silent><leader>g :<C-u>Telescope live_grep<CR>
+        nnoremap <silent>[Space]' :<C-u>Telescope resume<CR>
+        nnoremap <silent>[Space]gs :<C-u>Telescope git_status<CR>
       ]]
     end,
     wants = {

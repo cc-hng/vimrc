@@ -72,4 +72,8 @@ defer(function()
   if g.get_git_pwd() then
     vim.o.signcolumn = 'yes'
   end
+
+  vim.cmd [[
+    color PaperColor
+  ]]
 end, 0)
