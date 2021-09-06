@@ -11,7 +11,7 @@ return {
   -- load lua plugin cache
   {
     'lewis6991/impatient.nvim',
-    -- rocks = 'mpack',
+    rocks = 'mpack',
     config = function()
       require 'impatient'
     end,
