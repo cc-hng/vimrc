@@ -110,6 +110,7 @@ end
 function M.log(msg, hl, name)
   name = name or "Neovim"
   hl = hl or "Todo"
+  msg = type(msg) == 'string' and msg or vim.inspect(msg)
   vim.api.nvim_echo({ { name .. ": ", hl }, { msg } }, true, {})
 end
 

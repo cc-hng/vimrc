@@ -2,6 +2,9 @@ local cmd, fn, g = vim.cmd, vim.fn, vim.g
 local config = require 'config'
 
 return {
+  -- self
+  { 'wbthomason/packer.nvim', opt = true },
+
   'thinca/vim-ft-diff_fold',
   'rcmdnk/vim-markdown',
   'kana/vim-operator-user',

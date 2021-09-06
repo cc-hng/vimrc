@@ -1,14 +1,14 @@
 local fn   = vim.fn
-local is_windows = fn.has 'win32' or fn.has 'win64'
-local is_unix = fn.has 'unix'
-local is_mac = fn.has 'mac'
-local is_neovim = fn.has 'nvim'
+local is_windows = fn.has 'win32' ~= 0 or fn.has 'win64' ~= 0
+local is_unix = fn.has 'unix' ~= 0
+local is_mac = fn.has 'mac' ~= 0
+local is_neovim = fn.has 'nvim' ~= 0
 local home_dir = os.getenv("HOME")
 local config_dir = fn.stdpath 'config'
 local data_dir = fn.stdpath 'data'
 local local_dir = home_dir .. '/.local/bin'
 
-local gui_running = fn.has 'gui_running'
+local gui_running = fn.has 'gui_running' ~= 0
 
 local function get_git_pwd()
   local git_pwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
@@ -23,6 +23,7 @@ _G.dump = function(...)
 end
 
 return {
+  -- value
   is_mac = is_mac,
   is_unix = is_unix,
   is_windows = is_windows,

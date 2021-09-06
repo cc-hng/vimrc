@@ -7,7 +7,13 @@ telescope.setup {
   extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
   defaults = {
     -- mappings = { i = { ['<c-t>'] = trouble.open_with_trouble } },
-    mappings = { i = { ['<esc>'] = actions.close } },
+    mappings = { i = {
+        ['<esc>'] = actions.close,
+        ['<Tab>'] = actions.move_selection_next,
+        ['<S-Tab>'] = actions.move_selection_previous,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-k>'] = actions.move_selection_previous,
+    } },
     -- vimgrep_arguments = {
     --   'rg',
     --   '--color=never',
