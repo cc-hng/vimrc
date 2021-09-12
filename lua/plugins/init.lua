@@ -5,7 +5,7 @@ local editor = require(BASE .. 'editor')
 local tool = require(BASE .. 'tool')
 local completion = require(BASE .. 'completion')
 
-local list = { common, ui, editor, tool, completion }
+local list = { common, completion, editor, tool, ui }
 
 local plugins = {}
 

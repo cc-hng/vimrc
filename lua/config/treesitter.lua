@@ -6,7 +6,7 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
-vim.api.nvim_exec([[
+vim.cmd [[
 " Custom colors
 highlight CandyBlue         gui=NONE guibg=#2c2c2c guifg=#1e95fd
 highlight CandyCranberry    gui=NONE guibg=#2c2c2c guifg=#4ae2e2
@@ -69,5 +69,5 @@ highlight! link TSTypeBuiltin     Type
 highlight! link TSURL             Underlined
 highlight! link TSUnderline       Underlined
 highlight! link TSVariableBuiltin CandyLime
-]], true)
+]]
 

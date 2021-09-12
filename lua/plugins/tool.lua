@@ -20,6 +20,9 @@ return {
   {
     'liuchengxu/vista.vim',
     cmd = 'Vista',
+    hook_add = function ()
+      vim.cmd [[nnoremap [Space]v :<C-u>Vista<CR>]]
+    end,
     config = function()
       vim.g['vista#renderer#enable_icon'] = 1
       vim.g.vista_disable_statusline = 1
@@ -97,6 +100,38 @@ return {
       'nvim-telescope/telescope-fzy-native.nvim',
       -- { 'nvim-telescope/telescope-frecency.nvim', requires = 'tami5/sql.nvim' }
     },
+  },
+
+
+  {
+      "skywind3000/vim-terminal-help",
+      event = {"BufReadPre", "BufNewFile"},
+      hook_add = function ()
+          vim.cmd [[nnoremap <silent>[Space]` :H<CR>]]
+      end,
+      config = function ()
+        vim.g.terminal_cwd = 2
+        vim.g.terminal_shell = 'fish'
+      end,
+  },
+  {
+      "skywind3000/asynctasks.vim",
+      setup = function()
+          vim.cmd [[packadd vim-terminal-help]]
+          vim.g.asynctasks_term_pos = "thelp"
+          vim.g.asynctasks_term_rows = 10
+      end,
+      cmd = {"AsyncTask", "AsyncTaskMacro", "AsyncTaskList", "AsyncTaskEdit"},
+      requires = {
+          {
+              "skywind3000/asyncrun.vim",
+              cmd = {"AsyncRun", "AsyncStop"},
+              setup = function()
+                  vim.g.asyncrun_open = 6
+              end,
+          },
+          "skywind3000/vim-terminal-help",
+      },
   },
 
 }

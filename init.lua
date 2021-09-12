@@ -58,22 +58,26 @@ local function install_plugins()
   ]]
 end
 
+
 source 'init.vim'
 source 'options.vim'
 source 'mappings.vim'
 source 'unix.vim'
+source 'events.vim'
+
+if g.get_git_pwd() then
+    vim.o.signcolumn = 'yes'
+end
+
+install_plugins()
 
 -- run next frame
 defer(function()
-  install_plugins()
   -- vim.o.laststatus = 2
   -- vim.o.signcolumn = 'yes:1'
   --
-  if g.get_git_pwd() then
-    vim.o.signcolumn = 'yes'
-  end
-
   vim.cmd [[
-    color PaperColor
+    color OceanicNext
+    set mouse=ni
   ]]
 end, 0)

@@ -120,7 +120,6 @@ return {
 
   {
     'kana/vim-smartchr',
-    event = 'InsertCharPre',
     ft = {'c', 'cpp'},
     config = function ()
       local cmd = vim.api.nvim_command
@@ -135,7 +134,7 @@ return {
   -- sudo edit
   {
     'lambdalisue/suda.vim',
-    event = 'BufRead',
+    cmd = {'SudaRead', 'SudaWrite'},
     config = function()
       vim.g.suda_smart_edit = 1
     end,
