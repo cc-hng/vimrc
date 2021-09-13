@@ -54,3 +54,5 @@ vim.g.nvim_tree_bindings = {
   { key = "?",                           cb = tree_cb("toggle_help") },
 }
 
+-- https://github.com/kyazdani42/nvim-tree.lua/issues/292#issuecomment-893010829
+require('nvim-tree.view').View.winopts.signcolumn = 'no'

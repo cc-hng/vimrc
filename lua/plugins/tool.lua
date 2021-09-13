@@ -106,11 +106,13 @@ return {
   {
       "skywind3000/vim-terminal-help",
       event = {"BufReadPre", "BufNewFile"},
-      hook_add = function ()
-          vim.cmd [[nnoremap <silent>[Space]` :H<CR>]]
-      end,
-      config = function ()
+      -- hook_add = function ()
+      --     vim.cmd [[nnoremap <silent>[Space]` :H<CR>]]
+      -- end,
+      setup = function ()
+        vim.g.terminal_key = '[Space]`'
         vim.g.terminal_cwd = 2
+        vim.g.terminal_height = 15
         vim.g.terminal_shell = 'fish'
       end,
   },

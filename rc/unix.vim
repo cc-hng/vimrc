@@ -37,4 +37,4 @@ endif
 set mouse=
 
 " Colorscheme
-" colorscheme candy
+colorscheme candy

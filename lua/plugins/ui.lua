@@ -14,17 +14,24 @@ return {
     requires = 'kyazdani42/nvim-web-devicons',
     cmd = 'NvimTreeToggle',
     hook_add = function ()
-      vim.cmd [[nnoremap [Window]f :<C-u>NvimTreeToggle<CR>]]
+      vim.cmd [[
+        nnoremap [Window]f :<C-u>NvimTreeToggle<CR>
+        autocmd MyAutoCmd FileType NvimTree setlocal signcolumn=no
+      ]]
     end,
     config = config.nvim_tree,
   },
 
   -- 状态栏插件
   {
-    'glepnir/galaxyline.nvim',
+    'hoob3rt/lualine.nvim',
     key = {'n', '[Space]l'},
-    branch = 'main',
-    requires = {'kyazdani42/nvim-web-devicons'}, config = function() require 'eviline' end,
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    config = function()
+      require('lualine').setup {
+        options = { theme = 'auto' },
+      }
+    end,
   },
 
   -- git 状态显示

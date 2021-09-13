@@ -77,7 +77,7 @@ defer(function()
   -- vim.o.signcolumn = 'yes:1'
   --
   vim.cmd [[
-    color OceanicNext
+    color candy
     set mouse=ni
   ]]
 end, 0)
