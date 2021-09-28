@@ -28,6 +28,11 @@ if !has('nvim')
   let &t_EI = "\<Esc>[0 q"
 endif
 
+"if exists('$TMUX')
+"  let &t_SI .= "\ePtmux;\e\e[=1c\e\\"
+"  let &t_EI .= "\ePtmux;\e\e[=2c\e\\"
+"endif
+
 " Enable true color
 if exists('+termguicolors')
   set termguicolors

@@ -12,12 +12,17 @@ return {
   {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
+    tag = '1.2.8',
     cmd = 'NvimTreeToggle',
     hook_add = function ()
       vim.cmd [[
         nnoremap [Window]f :<C-u>NvimTreeToggle<CR>
         autocmd MyAutoCmd FileType NvimTree setlocal signcolumn=no
       ]]
+    end,
+    setup = function ()
+      vim.g.nvim_tree_width = 27
+      vim.g.nvim_tree_auto_close = 1
     end,
     config = config.nvim_tree,
   },
@@ -58,7 +63,8 @@ return {
         options = {
           modified_icon = '✥',
           buffer_close_icon = '',
-          always_show_bufferline = false
+          always_show_bufferline = false,
+          offsets = {{filetype = "NvimTree", text = "File Explorer", text_align = "left"}},
         }
       }
     end,
@@ -79,10 +85,7 @@ return {
   },
 
   -- 主题
-  {
-    'kurkale6ka/vim-desertEX',
-    opt = true,
-    config = function () vim.cmd [[color desertEX]] end },
+  { 'kurkale6ka/vim-desertEX', opt = true },
   { 'mhinz/vim-janah', opt = true },
   { 'challenger-deep-theme/vim', opt = true },
   { 'rakr/vim-one', opt = true },
@@ -91,5 +94,6 @@ return {
   { 'drewtempelmeyer/palenight.vim', opt = true },
   { 'ayu-theme/ayu-vim', opt = true },
   { 'rafi/awesome-vim-colorschemes', opt = true },
+  { 'tomasiser/vim-code-dark', opt = true }
 
 }

@@ -2,6 +2,8 @@
 -- editor
 --
 
+local config = require 'config'
+
 return {
   {'kana/vim-niceblock', opt = true},
 
@@ -82,41 +84,29 @@ return {
     end,
   },
 
-  -- 注释
+  -- gc gcc 注释插件
   {
-    "tyru/caw.vim",
-    keys = {
-        {"n", "gc"},
-        {"n", "gcc"},
-        {"x", "gc"},
-        {"x", "gcc"},
-    },
-    config = function ()
-      vim.cmd [[
-        function! InitCaw() abort
-          if !&l:modifiable
-            silent! nunmap <buffer> gc
-            silent! xunmap <buffer> gc
-            silent! nunmap <buffer> gcc
-            silent! xunmap <buffer> gcc
-          else
-            nmap <buffer> gc <Plug>(caw:prefix)
-            xmap <buffer> gc <Plug>(caw:prefix)
-            nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-            xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-            endif
-        endfunction
-        autocmd FileType * call InitCaw()
-        call InitCaw()
-      ]]
+    "terrortylor/nvim-comment",
+    keys = {"gc", "gcc"},
+    config = function()
+      require("nvim_comment").setup {
+        hook = function()
+          if vim.api.nvim_buf_get_option(0, "filetype") == "vue" then
+            require("ts_context_commentstring.internal").update_commentstring()
+          end
+        end
+      }
     end,
-    requires = {
-      "Shougo/context_filetype.vim",
-      config = function()
-        vim.g["context_filetype#search_offset"] = 2000
-      end,
-    },
   },
+
+  -- 缩进线插件
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = config.indent_blankline,
+    event = {"BufReadPre", "BufNewFile"},
+  },
+
+  {"mhinz/vim-sayonara", cmd = "Sayonara"},
 
   {
     'kana/vim-smartchr',

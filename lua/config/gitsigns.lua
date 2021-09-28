@@ -6,7 +6,7 @@ if not packer_plugins['plenary.nvim'].loaded then
 end
 
 require('gitsigns').setup {
-  current_line_blame = true,
+  current_line_blame = false,
   signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
   numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
   signs = {

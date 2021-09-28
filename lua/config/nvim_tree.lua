@@ -1,6 +1,4 @@
 
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-
 vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_git_gl = 1
 vim.g.nvim_tree_gitignore = 0
@@ -19,6 +17,7 @@ vim.g.nvim_tree_show_icons = {
   folder_arrows = 1,
 }
 
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 -- redefine mappings
 vim.g.nvim_tree_disable_default_keybindings = 1
 -- default mappings
@@ -56,3 +55,4 @@ vim.g.nvim_tree_bindings = {
 
 -- https://github.com/kyazdani42/nvim-tree.lua/issues/292#issuecomment-893010829
 require('nvim-tree.view').View.winopts.signcolumn = 'no'
+require('nvim-tree.view').View.width = 27

@@ -46,6 +46,16 @@ end
 
 vim.o.completeopt = "menuone,noselect"
 
+local function format_abbr(abbr, sz)
+  sz = sz or 30
+  local l = string.len(abbr)
+  if l > sz then
+    return string.sub(abbr, 1, sz) .. ' ...'
+  else
+    return abbr
+  end
+end
+
 -- nvim-cmp setup
 local cmp = require "cmp"
 local luasnip = require "luasnip"
@@ -71,6 +81,8 @@ cmp.setup {
         path = 1,
         nvim_lsp = 0,
       })[entry.source.name] or 0
+
+      vim_item.abbr = format_abbr(vim_item.abbr, 32)
       return vim_item
     end,
   },
@@ -80,6 +92,8 @@ cmp.setup {
     end,
   },
   documentation = {
+    maxwidth = 45,
+    winhighlight = '',
     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
   },
   mapping = {

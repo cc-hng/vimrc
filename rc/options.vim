@@ -11,7 +11,7 @@ set smartcase
 " Enable incremental search.
 set incsearch
 " Don't highlight search result.
-set nohlsearch
+set hlsearch
 
 " Searches wrap around the end of the file.
 set wrapscan

@@ -65,9 +65,9 @@ source 'mappings.vim'
 source 'unix.vim'
 source 'events.vim'
 
-if g.get_git_pwd() then
-    vim.o.signcolumn = 'yes'
-end
+-- if g.get_git_pwd() then
+--     vim.o.signcolumn = 'yes'
+-- end
 
 install_plugins()
 
@@ -77,7 +77,8 @@ defer(function()
   -- vim.o.signcolumn = 'yes:1'
   --
   vim.cmd [[
-    color candy
+    set nu
+    color codedark
     set mouse=ni
   ]]
 end, 0)
