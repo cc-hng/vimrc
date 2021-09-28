@@ -58,7 +58,6 @@ local function install_plugins()
   ]]
 end
 
-
 source 'init.vim'
 source 'options.vim'
 source 'mappings.vim'

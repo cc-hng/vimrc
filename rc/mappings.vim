@@ -85,7 +85,10 @@ nmap      s [Window]
 " nnoremap <silent> sp  <Cmd>vsplit<CR>:wincmd w<CR>
 nnoremap <silent> [Window]o  <Cmd>only<CR>
 nnoremap <silent> <Tab>      <cmd>wincmd w<CR>
-nnoremap <silent><expr> q winnr('$') != 1 ? '<Cmd>close<CR>' : ""
+
+" buffer count
+nnoremap <silent><expr> q winnr('$') != 1 ? '<Cmd>close<CR>' :
+        \ len(getbufinfo({'buflisted':1})) != 1 ? '<Cmd>bd<CR>' : ""
 
 " Original search
 nnoremap s/    /
