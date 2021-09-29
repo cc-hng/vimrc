@@ -100,6 +100,7 @@ function! vimrc#enable_syntax() abort
     TSBufEnable context_commentstring
   endif
 endfunction
+
 function! vimrc#disable_syntax() abort
   syntax off
   if has('nvim') && exists(':TSEnableAll')
@@ -107,6 +108,7 @@ function! vimrc#disable_syntax() abort
     TSBufDisable context_commentstring
   endif
 endfunction
+
 function! vimrc#check_syntax() abort
   let max_size = 500000
   let max_head_size = 10000

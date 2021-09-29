@@ -102,8 +102,9 @@ return {
   -- 缩进线插件
   {
     "lukas-reineke/indent-blankline.nvim",
+    after = 'nvim-treesitter',
     config = config.indent_blankline,
-    event = {"BufReadPre", "BufNewFile"},
+    -- event = {"BufReadPre", "BufNewFile"},
   },
 
   {"mhinz/vim-sayonara", cmd = "Sayonara"},

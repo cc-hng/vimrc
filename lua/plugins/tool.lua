@@ -13,7 +13,29 @@ return {
   },
   {
     'editorconfig/editorconfig-vim',
-    ft = { 'lua', 'go','typescript','javascript','vim','rust','zig','c','cpp' },
+    -- event = 'FileType',
+    -- ft = { 'lua', 'go','typescript','javascript','vim','rust','zig','c','cpp' },
+  },
+
+  -- markdown preview
+  {
+    "npxbr/glow.nvim",
+    run = ":GlowInstall",
+    cmd = "Glow",
+  },
+
+  -- 自动括号括回
+  {
+    "windwp/nvim-autopairs",
+    after = "nvim-cmp",
+    config = function()
+      require("nvim-autopairs").setup {}
+      require("nvim-autopairs.completion.cmp").setup {
+        map_cr = true, --  map <CR> on insert mode
+        map_complete = true, -- it will auto insert `(` after select function or method item
+        auto_select = true -- automatically select the first item
+      }
+    end,
   },
 
   -- outline

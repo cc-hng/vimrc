@@ -12,6 +12,7 @@ return {
   {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
+    lock = true,
     tag = '1.2.8',
     cmd = 'NvimTreeToggle',
     hook_add = function ()
@@ -32,11 +33,12 @@ return {
     'hoob3rt/lualine.nvim',
     key = {'n', '[Space]l'},
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    config = function()
-      require('lualine').setup {
-        options = { theme = 'auto' },
-      }
-    end,
+    config = config.lualine,
+    -- config = function()
+    --   require('lualine').setup {
+    --     options = { theme = 'auto' },
+    --   }
+    -- end,
   },
 
   -- git 状态显示

@@ -175,7 +175,7 @@ function! s:mkdir_as_necessary(dir, force) abort
 endfunction
 
 " Use autofmt.
-set formatexpr=autofmt#japanese#formatexpr()
+" set formatexpr=autofmt#japanese#formatexpr()
 
 " Use blowfish2
 " https://dgl.cx/2014/10/vim-blowfish
@@ -207,7 +207,7 @@ else
    set listchars=tab:▸\ ,trail:-,precedes:«,nbsp:%
 endif
 " Always disable statusline.
-set laststatus=0
+set laststatus=2
 " Height of command line.
 set cmdheight=1
 " Not show command on statusline.
