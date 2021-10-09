@@ -47,7 +47,7 @@ end
 vim.o.completeopt = "menuone,noselect"
 
 local function format_abbr(abbr, sz)
-  sz = sz or 30
+  sz = sz or 36
   local l = string.len(abbr)
   if l > sz then
     return string.sub(abbr, 1, sz) .. ' ...'
@@ -111,6 +111,8 @@ cmp.setup {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T "<C-n>", "n")
+      elseif cmp.visible() then
+        cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         vim.fn.feedkeys(T "<Plug>luasnip-expand-or-jump", "")
       elseif check_backspace() then
@@ -125,6 +127,8 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(T "<C-p>", "n")
+      elseif cmp.visible() then
+        cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         vim.fn.feedkeys(T "<Plug>luasnip-jump-prev", "")
       else
