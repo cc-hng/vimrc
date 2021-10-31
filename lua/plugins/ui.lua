@@ -29,17 +29,17 @@ return {
   },
 
   -- 状态栏插件
-  {
-    'hoob3rt/lualine.nvim',
-    key = {'n', '[Space]l'},
-    requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    config = config.lualine,
-    -- config = function()
-    --   require('lualine').setup {
-    --     options = { theme = 'auto' },
-    --   }
-    -- end,
-  },
+  -- {
+  --   'hoob3rt/lualine.nvim',
+  --   key = {'[Space]l'},
+  --   requires = {'kyazdani42/nvim-web-devicons', opt = true},
+  --   config = config.lualine,
+  --   -- config = function()
+  --   --   require('lualine').setup {
+  --   --     options = { theme = 'auto' },
+  --   --   }
+  --   -- end,
+  -- },
 
   -- git 状态显示
   {

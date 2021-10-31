@@ -79,43 +79,44 @@ ins_left {
   color = {fg = colors.blue}, -- Sets highlighting of component
   left_padding = 0 -- We don't need space before this
 }
-
-ins_left {
-  -- mode component
-  function()
-    -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-      i = colors.green,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.red,
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.red,
-      ce = colors.red,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
-      t = colors.red
-    }
-
-    local theme = require 'lualine.themes.auto'
-    local bg = theme.normal.c.bg
-    vim.api.nvim_command(
-      'hi! LualineMode guifg=' .. mode_color[vim.fn.mode()] .. " guibg=" ..  bg)
-    return ''
-  end,
-  color = "LualineMode",
-  left_padding = 0
-}
+-- 
+-- ins_left {
+--   -- mode component
+--   function()
+--     -- auto change color according to neovims mode
+--     local mode_color = {
+--       n = colors.red,
+--       i = colors.green,
+--       v = colors.blue,
+--       [''] = colors.blue,
+--       V = colors.blue,
+--       c = colors.magenta,
+--       no = colors.red,
+--       s = colors.orange,
+--       S = colors.orange,
+--       [''] = colors.orange,
+--       ic = colors.yellow,
+--       R = colors.violet,
+--       Rv = colors.violet,
+--       cv = colors.red,
+--       ce = colors.red,
+--       r = colors.cyan,
+--       rm = colors.cyan,
+--       ['r?'] = colors.cyan,
+--       ['!'] = colors.red,
+--       t = colors.red
+--     }
+-- 
+--     local theme = require 'lualine.themes.auto'
+--     local bg = theme.normal.c.bg
+--     bg = '#565575'
+--     vim.api.nvim_command(
+--       'hi! LualineMode guifg=' .. mode_color[vim.fn.mode()] .. " guibg=" ..  bg)
+--     return ''
+--   end,
+--   color = "LualineMode",
+--   left_padding = 0
+-- }
 
 
 ins_left {

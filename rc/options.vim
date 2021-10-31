@@ -207,7 +207,7 @@ else
    set listchars=tab:▸\ ,trail:-,precedes:«,nbsp:%
 endif
 " Always disable statusline.
-set laststatus=2
+set laststatus=0
 " Height of command line.
 set cmdheight=1
 " Not show command on statusline.

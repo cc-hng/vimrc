@@ -72,12 +72,18 @@ install_plugins()
 
 -- run next frame
 defer(function()
-  -- vim.o.laststatus = 2
+  vim.o.laststatus = 0
   -- vim.o.signcolumn = 'yes:1'
   --
   vim.cmd [[
     set nu
     color codedark
+    " color carbonized-light
+    " color challenger_deep
+    " color OceanicNext
+    " color desertEX
+    " color wombat256mod
+   " color github
     set mouse=ni
   ]]
 end, 0)
