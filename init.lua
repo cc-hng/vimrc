@@ -77,13 +77,16 @@ defer(function()
   --
   vim.cmd [[
     set nu
-    color codedark
+    " color codedark
     " color carbonized-light
     " color challenger_deep
     " color OceanicNext
     " color desertEX
     " color wombat256mod
-   " color github
+    " color github
+    " color PaperColor
+    " color flattened_dark
+    color jellybeans
     set mouse=ni
   ]]
 end, 0)
