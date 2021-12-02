@@ -109,19 +109,6 @@ return {
 
   {"mhinz/vim-sayonara", cmd = "Sayonara"},
 
-  {
-    'kana/vim-smartchr',
-    ft = {'c', 'cpp'},
-    config = function ()
-      local cmd = vim.api.nvim_command
-      -- cmd [[augroup user_plugin_smartchr]]
-      -- cmd [[autocmd!]]
-      -- cmd [[autocmd FileType c,cpp inoremap <buffer> <expr> . smartchr#loop('.', '->', '...')]]
-      -- cmd [[augroup END]]
-      cmd [[inoremap <buffer> <expr> . smartchr#loop('.', '->', '...')]]
-    end,
-  },
-
   -- sudo edit
   {
     'lambdalisue/suda.vim',

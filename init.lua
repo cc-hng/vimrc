@@ -3,6 +3,7 @@ local defer = vim.defer_fn
 local g = require 'global'
 local u = require 'utils'
 
+
 if g.gui_running or not g.is_neovim then
   u.error('gui or vim is not supported')
 end

@@ -87,8 +87,8 @@ nnoremap <silent> [Window]o  <Cmd>only<CR>
 nnoremap <silent> <Tab>      <cmd>wincmd w<CR>
 
 " buffer count
-nnoremap <silent><expr> q winnr('$') != 1 ? '<Cmd>close<CR>' :
-        \ len(getbufinfo({'buflisted':1})) != 1 ? '<Cmd>bd<CR>' : ""
+nnoremap <silent><expr> q winnr('$') != 1 ? '<Cmd>Sayonara<CR>' :
+        \ len(getbufinfo({'buflisted':1})) != 1 ? '<Cmd>Sayonara<CR>' : ""
 
 " Original search
 nnoremap s/    /
