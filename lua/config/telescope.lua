@@ -40,7 +40,7 @@ telescope.setup {
     --   },
     -- },
     -- file_sorter = require'telescope.sorters'.get_fzy_file
-    -- file_ignore_patterns = {},
+    file_ignore_patterns = {"node_modules", ".git", ".cache", "build"},
     -- generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
     -- shorten_path = true,
     winblend = 10,
@@ -91,9 +91,9 @@ M.project_files = function(opts)
   require('telescope.builtin').git_files(opts)
 end
 
--- local util = require 'utils'
+local util = require 'utils'
 
--- util.nnoremap('<leader>ff', M.project_files)
+-- util.nnoremap('<leader>x', M.project_files)
 -- util.nnoremap('<Leader>fd', function()
 --   require('telescope.builtin').git_files({ cwd = '~/dot' })
 -- end)

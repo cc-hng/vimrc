@@ -88,6 +88,12 @@ return {
   {
     "terrortylor/nvim-comment",
     keys = {"gc", "gcc"},
+    hook_add = function()
+      vim.cmd[[
+        autocmd MyAutoCmd BufEnter *.cpp,*.h :lua vim.api.nvim_buf_set_option(0, "commentstring", "// %s")
+        autocmd MyAutoCmd BufFilePost *.cpp,*.h :lua vim.api.nvim_buf_set_option(0, "commentstring", "// %s")
+      ]]
+    end,
     config = function()
       require("nvim_comment").setup {
         hook = function()
@@ -103,6 +109,8 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     after = 'nvim-treesitter',
+    hook_add = function ()
+    end,
     config = config.indent_blankline,
     -- event = {"BufReadPre", "BufNewFile"},
   },
