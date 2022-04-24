@@ -91,10 +91,12 @@ cmp.setup {
       require("luasnip").lsp_expand(args.body)
     end,
   },
-  documentation = {
-    maxwidth = 45,
-    winhighlight = '',
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  window = {
+    documentation = {
+      maxwidth = 45,
+      winhighlight = '',
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
   },
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
