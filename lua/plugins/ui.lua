@@ -76,6 +76,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
+    -- commit = 'acf0c0f6a10e384c86f2b162b20488af76d292be',
     event = 'BufRead',
     after = 'impatient.nvim',
     config = config.treesitter,

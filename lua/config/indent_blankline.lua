@@ -1,3 +1,5 @@
+-- vim.g.indent_blankline_char_highlight_list = { "IndentBlanklineIndent" }
+
 vim.g.indent_blankline_char = "│"
 vim.g.indent_blankline_show_first_indent_level = true
 vim.g.indent_blankline_filetype_exclude = {
@@ -41,3 +43,4 @@ vim.g.indent_blankline_context_patterns = {
 }
 -- because lazy load indent-blankline so need readd this autocmd
 vim.cmd("autocmd MyAutoCmd CursorMoved * IndentBlanklineRefresh")
+

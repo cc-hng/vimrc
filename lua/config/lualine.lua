@@ -111,7 +111,7 @@ ins_left {
     local bg = theme.normal.c.bg
     -- guibg
     -- hi lualine_c_normal
-    bg = '#30302c'
+    bg = '#262626'
     vim.api.nvim_command(
       'hi! LualineMode guifg=' .. mode_color[vim.fn.mode()] .. " guibg=" ..  bg)
     return ''

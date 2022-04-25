@@ -3,7 +3,6 @@ local defer = vim.defer_fn
 local g = require 'global'
 local u = require 'utils'
 
-
 if g.gui_running or not g.is_neovim then
   u.error('gui or vim is not supported')
 end
@@ -72,22 +71,21 @@ source 'events.vim'
 install_plugins()
 
 -- run next frame
-defer(function()
-  vim.o.laststatus = 0
-  -- vim.o.signcolumn = 'yes:1'
-  --
+defer(function ()
   vim.cmd [[
-    set nu
-    " color codedark
-    " color carbonized-light
-    " color challenger_deep
+    " color onehalfdark
     " color OceanicNext
-    " color desertEX
-    " color wombat256mod
-    " color github
-    " color PaperColor
-    " color flattened_dark
-    color jellybeans
+    " color 256_noir
+    " color sunbather
+    color codedark
     set mouse=ni
+    set nu
+    " hi Normal guibg=NONE ctermbg=NONE
+
+    " treesitter no highlight first time ???
+    edit
   ]]
-end, 0)
+  vim.o.laststatus = 0
+  -- vim.cmd [[highlight IndentBlanklineIndent guifg=#585858 gui=nocombine]]
+end, 5)
+
