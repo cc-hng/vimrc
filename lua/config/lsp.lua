@@ -53,7 +53,7 @@ local servers = {
   "pyright",
   "rust_analyzer",
   --"ccls",
-  "cmake",
+  -- "cmake",
   "gopls",
   "cssls",
   "tsserver",
