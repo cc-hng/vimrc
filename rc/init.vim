@@ -1,11 +1,36 @@
 "---------------------------------------------------------------------------
 " Initialize:
 "
-set debug=throw
-set nocompatible
-set encoding=utf-8
+if &compatible
+  set nocompatible
+endif
+
+" default autocmd group
+augroup MyAutoCmd
+  autocmd!
+augroup END
+" for neovim-remote
+
+" Minimal options
+if exists('+termguicolors') && !has('gui_running')
+  set termguicolors
+endif
+set showtabline=0 laststatus=3
+set noruler showcmd noshowmode
+
+" Height of the command line.
+try
+  set cmdheight=0
+
+  " For recording messages
+  autocmd MyAutoCmd RecordingEnter * set cmdheight=1
+  autocmd MyAutoCmd RecordingLeave * set cmdheight=0
+catch
+  set cmdheight=1
+endtry
 
 " Build encodings.
+set encoding=utf-8
 let &fileencodings = 'utf-8,,cp936'
 
 " Setting of terminal encoding.
@@ -23,10 +48,15 @@ let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/'
 " Use English interface.
 language message C
 
-" 
-augroup MyAutoCmd
-  autocmd!
-augroup END
+if has('nvim')
+  " Use cursor shape feature
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,
+        \i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+
+  " Use new loader
+  lua if vim.loader then vim.loader.enable() end
+endif
+
 
 "---------------------------------------------------------------------------
 " Disable default plugins
@@ -55,3 +85,4 @@ let g:loaded_tarPlugin         = 1
 let g:loaded_tutor_mode_plugin = 1
 let g:loaded_vimballPlugin     = 1
 let g:loaded_zipPlugin         = 1
+let g:loaded_python3_provider  = 1

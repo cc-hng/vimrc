@@ -1,4 +1,18 @@
 "---------------------------------------------------------------------------
+" Base:
+"
+
+" Build encodings.
+let &fileencodings = 'ucs-bom,utf-8,cp936'
+
+if has('multi_byte_ime')
+  set iminsert=0 imsearch=0
+endif
+
+" set packpath=
+
+
+"---------------------------------------------------------------------------
 " Search:
 "
 
@@ -37,49 +51,14 @@ set shiftround
 " Enable smart indent.
 set autoindent smartindent
 
-function! GnuIndent()
-  setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
-  setlocal shiftwidth=2
-  setlocal tabstop=4
-  setlocal noexpandtab
-endfunction
-
 " Disable modeline.
 set modelines=0
 set nomodeline
-autocmd MyAutoCmd BufRead,BufWritePost *.txt setlocal modelines=5 modeline
-
-" Use clipboard register.
-
-if has('mac')
-  let g:clipboard = {
-    \ 'name': 'pbcopy',
-    \ 'copy': {
-    \    '+': 'pbcopy',
-    \    '*': 'pbcopy',
-    \  },
-    \ 'paste': {
-    \    '+': 'pbpaste',
-    \    '*': 'pbpaste',
-    \ },
-    \ 'cache_enabled': 0,
-    \ }
-endif
-
-if (!has('nvim') || $DISPLAY !=# '') && has('clipboard')
-  if has('unnamedplus')
-     set clipboard& clipboard+=unnamedplus
-  else
-     set clipboard& clipboard+=unnamed
-  endif
-endif
+" For only Vim help files.
+autocmd MyAutoCmd BufRead,BufWritePost *.txt setlocal modelines=2 modeline
 
 " Enable backspace delete indent and newline.
-if has('patch-8.2.0592')
-  set backspace=indent,eol,nostop
-else
-  set backspace=indent,eol,start
-endif
+set backspace=indent,eol,nostop
 
 " Highlight <>.
 set matchpairs+=<:>
@@ -87,16 +66,12 @@ set matchpairs+=<:>
 " Display another buffer when current buffer isn't saved.
 set hidden
 
-" Search home directory path on cd.
-" But can't complete.
-"  set cdpath+=~
-
 " Disable folding.
 set nofoldenable
 set foldmethod=manual
 set foldlevel=3
 " Show folding level.
-if has('nvim-0.5')
+if has('nvim')
   set foldcolumn=auto:1
 else
   set foldcolumn=1
@@ -104,36 +79,27 @@ endif
 set fillchars=vert:\|
 set commentstring=%s
 
-" FastFold
-autocmd MyAutoCmd TextChangedI,TextChanged *
-      \ if &l:foldenable && &l:foldmethod !=# 'manual' |
-      \   let b:foldmethod_save = &l:foldmethod |
-      \   let &l:foldmethod = 'manual' |
-      \ endif
-autocmd MyAutoCmd BufWritePost *
-      \ if &l:foldmethod ==# 'manual' && exists('b:foldmethod_save') |
-      \   let &l:foldmethod = b:foldmethod_save |
-      \   execute 'normal! zx' |
-      \ endif
-
-if exists('*FoldCCtext')
-  " Use FoldCCtext().
-  set foldtext=FoldCCtext()
-endif
-
 " Use vimgrep.
 " set grepprg=internal
 " Use grep.
 set grepprg=grep\ -inH
 
-" Exclude = from isfilename.
 set isfname-==
+set isfname+=@-@
+
+" Better for <C-w> deletion
+autocmd MyAutoCmd CmdlineEnter *
+      \ : let s:save_iskeyword = &l:iskeyword
+      \ | setlocal iskeyword+=.
+      \ | setlocal iskeyword+=-
+autocmd MyAutoCmd CmdlineLeave *
+      \ let &l:iskeyword = s:save_iskeyword
 
 " Keymapping timeout.
-set timeout timeoutlen=3000 ttimeoutlen=100
+set timeout timeoutlen=500 ttimeoutlen=100
 
 " CursorHold time.
-set updatetime=100
+set updatetime=1000
 
 " Set swap directory.
 set directory-=.
@@ -150,82 +116,108 @@ set keywordprg=:help
 
 " Disable paste.
 autocmd MyAutoCmd InsertLeave *
-      \ if &paste | setlocal nopaste | echo 'nopaste' | endif |
-      \ if &l:diff | diffupdate | endif
+      \ : if &paste
+      \ |   setlocal nopaste
+      \ |   echo 'nopaste'
+      \ | endif
+      \ | if &l:diff
+      \ |   diffupdate
+      \ | endif
 
 " Update diff.
-autocmd MyAutoCmd InsertLeave * if &l:diff | diffupdate | endif
+autocmd MyAutoCmd InsertLeave *
+      \ : if &l:diff
+      \ |   diffupdate
+      \ | endif
 
-if has('patch-8.1.0360')
-  set diffopt=internal,algorithm:patience,indent-heuristic
-endif
+set diffopt=internal,algorithm:patience,indent-heuristic
 
 " Make directory automatically.
-" --------------------------------------
-" http://vim-users.jp/2011/02/hack202/
-
 autocmd MyAutoCmd BufWritePre *
-      \ call s:mkdir_as_necessary(expand('<afile>:p:h'), v:cmdbang)
+      \ call s:mkdir_as_necessary('<afile>:p:h'->expand(), v:cmdbang)
 function! s:mkdir_as_necessary(dir, force) abort
-  if !isdirectory(a:dir) && &l:buftype ==# '' &&
-        \ (a:force || input(printf('"%s" does not exist. Create? [y/N]',
-        \              a:dir)) =~? '^y\%[es]$')
-    call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+  if a:dir->isdirectory() || &l:buftype !=# ''
+    return
+  endif
+
+  if a:force || $'"{a:dir}" does not exist. Create? [y/N] '
+        \       ->input() =~? '^y\%[es]$'
+    call mkdir(a:dir->iconv(&encoding, &termencoding), 'p')
   endif
 endfunction
 
 " Use autofmt.
-" set formatexpr=autofmt#japanese#formatexpr()
-
-" Use blowfish2
-" https://dgl.cx/2014/10/vim-blowfish
-" if has('cryptv')
-  " It seems 15ms overhead.
-  "  set cryptmethod=blowfish2
-" endif
+set formatexpr=autofmt#japanese#formatexpr()
 
 " If true Vim master, use English help file.
 set helplang& helplang=en,ja
+
+set spelllang+=cjk
+set spelloptions+=camel
 
 " Default fileformat.
 set fileformat=unix
 " Automatic recognition of a new line cord.
 set fileformats=unix,dos,mac
 
+" Disable editorconfig
+let g:editorconfig = v:true
+
 
 "---------------------------------------------------------------------------
 " View:
 "
 
-" Show line number.
-"set number
+" Disable menu.vim
+if has('gui_running')
+  set guioptions=Mc
+endif
+
 " Show <TAB> and <CR>
 set list
-if has('win32') || has('win64')
+if has('win32')
    set listchars=tab:>-,trail:-,precedes:<
 else
    set listchars=tab:▸\ ,trail:-,precedes:«,nbsp:%
 endif
-" Always disable statusline.
-set laststatus=0
-" Height of command line.
-set cmdheight=1
-" Not show command on statusline.
-" set noshowcmd
-" Show title.
-set title
-" Title length.
-set titlelen=95
-" Title string.
-let &g:titlestring = "
-      \ %(%m%r%w%)%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)"
-" Disable tabline.
-set showtabline=0
+
+" Disable statusline when command line
+"autocmd MyAutoCmd CmdlineEnter * set laststatus=0 | redrawstatus
+"autocmd MyAutoCmd CmdlineLeave * set laststatus=2
+
+" Does not report lines
+set report=1000
+
+function! ToggleStatusline(enabled) abort
+  if a:enabled ==# 1
+    let &g:statusline=""
+        \ . "%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
+        \ . ".(winnr('#')==winnr()?'#':'').']':''}\ "
+        \ . "%{(&previewwindow?'[preview] ':'').expand('%:t')} %m"
+        \ . "%="
+        \ . "%S"
+        \ . "%="
+        \ . "%{(winnr('$')==1 || winnr('#')!=winnr()) ? '['.(&filetype!=''?&filetype.',':'')"
+        \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
+        \ . "%{printf('%'.(len(line('$'))+2).'d/%d ',line('.'),line('$'))}"
+  else
+    let &g:statusline="%="
+          \ . "%{expand('%:t')} "
+          \ . "%{(winnr('$')==1 || winnr('#')!=winnr()) ? '['.(&filetype!=''?&filetype.',':'')"
+          \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''} "
+  endif
+endfunction
 
 " Set statusline.
-let &g:statusline = " %=%{printf('%'.(len(line('$'))+2).'d/%d',line('.'),line('$'))}"
+" set statusline=%{repeat('─',winwidth('.'))}
+if has("nvim-0.9.0")
+  set showcmdloc=statusline
+endif
+call ToggleStatusline(1)
+autocmd MyAutoCmd CmdlineEnter * call ToggleStatusline(0) | redrawstatus
+autocmd MyAutoCmd CmdlineLeave * call ToggleStatusline(1)
 
-" Note: wrap option is very slow!
+" NOTE: wrap option is very slow!
 set nowrap
 " Turn down a long line appointed in 'breakat'
 set linebreak
@@ -234,12 +226,6 @@ set breakat=\ \	;:,!?
 " Wrap conditions.
 set whichwrap+=h,l,<,>,[,],b,s,~
 set breakindent
-
-" Do not display the greetings message at the time of Vim start.
-" Do not display the completion messages
-" Do not display the edit messages
-set shortmess=aTIcF
-set noshowmode
 
 " Don't create backup.
 set nowritebackup
@@ -252,31 +238,34 @@ set t_vb=
 set novisualbell
 set belloff=all
 
-if has('nvim')
-  " Display candidates by popup menu.
-  set wildmenu
-  set wildmode=full
-  set wildoptions+=pum
-else
-  " Display candidates by list.
-  set nowildmenu
-  set wildmode=list:longest,full
+" Display candidates by popup menu.
+set wildmenu
+set wildmode=full
+if has('patch-8.2.4463')
+  set wildoptions+=fuzzy
 endif
-" Increase history amount.
-set history=1000
+
+" Display candidates by list.
+"set nowildmenu
+"set wildmode=list:longest,full
+
 " Display all the information of the tag by the supplement of the Insert mode.
 set showfulltag
 " Can supplement a tag in a command-line.
 set wildoptions+=tagfile
+" Complete all candidates
+set wildignorecase
 
+" Increase history amount.
+set history=200
 if has('nvim')
-  set shada=!,'100,<20,s10,h
+  set shada='100,<20,s10,h,r/tmp/,rterm:
 else
-  set viminfo=!,'100,<20,s10,h
+  set viminfo='100,<20,s10,h,r/tmp/
 endif
 
 " Disable menu
-let g:did_install_default_menus = 1
+let g:did_install_default_menus = v:true
 
 " Completion setting.
 set completeopt=menuone
@@ -287,14 +276,11 @@ endif
 " Don't complete from other buffer.
 set complete=.
 " Set popup menu max height.
-set pumheight=10
-if exists('+pumwidth')
-  " Set popup menu max width.
-  set pumwidth=10
-endif
-
-" Report changes.
-set report=0
+set pumheight=5
+" Set popup menu min width.
+set pumwidth=0
+" Use "/" for path completion
+set completeslash=slash
 
 " Maintain a current line at the time of movement as much as possible.
 set nostartofline
@@ -312,6 +298,10 @@ set winheight=1
 set cmdwinheight=5
 " No equal window size.
 set noequalalways
+  if exists('+splitscroll')
+  " Disable scroll when split
+  set nosplitscroll
+endif
 
 " Adjust window size of preview and help.
 set previewheight=8
@@ -327,7 +317,7 @@ set display+=uhex
 " For conceal.
 set conceallevel=2
 
-set colorcolumn=79
+"set colorcolumn=79
 
 if exists('+previewpopup')
   set previewpopup=height:10,width:60
@@ -335,3 +325,17 @@ endif
 
 " Disable signcolumn
 set signcolumn=no
+
+" Disable cmdwin
+set cedit=
+
+set redrawtime=0
+
+" I use <C-w> in terminal mode
+if exists('+termwinkey')
+  set termwinkey=<C-L>
+endif
+
+if exists('+smoothscroll')
+  set smoothscroll
+endif
