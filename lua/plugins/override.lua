@@ -6,20 +6,14 @@
 -- * override the configuration of LazyVim plugins
 return {
   -- add gruvbox
-  { "kurkale6ka/vim-desertEX", optional = true },
-  { "mhinz/vim-janah", optional = true },
-  { "rmehri01/onenord.nvim", optional = false },
-  { "rockerBOO/boo-colorscheme-nvim", optional = true },
-  { "challenger-deep-theme/vim", optional = true },
-  { "tomasiser/vim-code-dark", optional = true },
-  { "rafi/awesome-vim-colorschemes", optional = false },
-  { "romgrk/doom-one.vim", optional = true },
-  { "srcery-colors/srcery-vim", optional = true },
-  { "AlexvZyl/nordic.nvim", optional = true },
-  { "rafamadriz/neon", optional = true },
+  { "mhinz/vim-janah" },
+  { "challenger-deep-theme/vim" },
   { "mhartington/oceanic-next" },
   { "EdenEast/nightfox.nvim" },
   { "rebelot/kanagawa.nvim" },
+  { "rakr/vim-one" },
+  { "projekt0n/github-nvim-theme" },
+  { "Rigellute/rigel" },
 
   -- Configure LazyVim to load gruvbox
   {
@@ -27,15 +21,20 @@ return {
     opts = {
       -- colorscheme = "solarized8_high",
       -- colorscheme = "codedark",
-      colorscheme = "tokyonight-night",
+      -- colorscheme = "tokyonight-night",
       -- colorscheme = "OceanicNext",
-      -- colorscheme = "catppuccin",
+      -- colorscheme = "catppuccin-mocha",
       -- colorscheme = "neon",
       -- colorscheme = "space-vim-dark",
-      -- colorscheme = "habamax",
-      -- colorscheme = "atom",
+      -- colorscheme = "github_dark_colorblind",
       -- colorscheme = "kanagawa-wave",
+      -- colorscheme = "duskfox",
+      -- colorscheme = "onehalfdark",
+      -- colorscheme = "challenger_deep",
+      -- colorscheme = "janah",
+      -- colorscheme = "carbonfox",
       -- colorscheme = "nightfox",
+      colorscheme = "candy",
     },
   },
 
@@ -129,6 +128,7 @@ return {
     ---@class PluginLspOpts
     opts = {
       inlay_hints = { enabled = false },
+      document_highlight = { enabled = true },
       servers = {
         -- jsonls = { mason = false },
       },
@@ -177,7 +177,7 @@ return {
         "yaml",
       },
       highlight = {
-        enable = true,
+        enable = false,
         disable = function(lang, buf)
           if lang == "vimdoc" or lang == "diff" or lang == "gitcommit" or lang == "swift" then
             return true
@@ -206,17 +206,12 @@ return {
 
   -- Use <tab> for completion and snippets (supertab)
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
-  {
-    "L3MON4D3/LuaSnip",
-    keys = function()
-      return {}
-    end,
-  },
   -- then: setup supertab in cmp
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
+      "L3MON4D3/LuaSnip",
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -251,23 +246,34 @@ return {
       }
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<CR>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            if luasnip.expandable() then
+              luasnip.expand()
+            else
+              cmp.confirm({
+                select = true,
+              })
+            end
+          else
+            fallback()
+          end
+        end),
+
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-            -- this way you will only jump inside the snippet region
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
+          elseif luasnip.locally_jumpable(1) then
+            luasnip.jump(1)
           else
             fallback()
           end
         end, { "i", "s" }),
+
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
+          elseif luasnip.locally_jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()

@@ -48,7 +48,7 @@ highlight DiffText      gui=NONE guibg=#802860 guifg=#ff78f0
 
 " Cursor
 highlight Cursor        gui=NONE guibg=#606060 guifg=fg
-highlight CursorLine    gui=NONE guibg=#444444 guifg=fg term=NONE cterm=NONE
+highlight CursorLine    gui=NONE guibg=#454545 guifg=NONE term=NONE cterm=NONE
 highlight lCursor       gui=NONE guibg=#80403f guifg=fg
 highlight CursorIM      gui=NONE guibg=#bb00aa guifg=fg
 
@@ -57,18 +57,18 @@ highlight Folded        gui=NONE guibg=#106090 guifg=#40f0f0
 highlight FoldColumn    gui=NONE guibg=#2c2c2c guifg=#40c0ff
 
 " Syntax group
-highlight Comment       gui=NONE guibg=#2c2c2c guifg=#c7c7f9
-highlight Constant      gui=NONE guibg=#2c2c2c guifg=#90d0ff
-highlight Error         gui=bold guibg=#2c2c2c guifg=#ffa0af
-highlight Identifier    gui=NONE guifg=#40f0f0 guibg=#2c2c2c
-highlight Ignore        gui=NONE guibg=#2c2c2c guifg=#2c2c2c
-highlight PreProc       gui=NONE guibg=#2c2c2c guifg=#40f0a0
-highlight Special       gui=NONE guibg=#2c2c2c guifg=#e0e080
-highlight Statement     gui=NONE guibg=#2c2c2c guifg=#ffa0ff
-highlight Todo          gui=bold,underline guibg=#2c2c2c guifg=#ffa0a0
-highlight Type          gui=NONE guibg=#2c2c2c guifg=#ffc864
-highlight Underlined    gui=underline guibg=#2c2c2c guifg=#f0f0f8
-highlight CursorColumn  gui=NONE guibg=#666666 guifg=fg
+highlight Comment       gui=NONE guibg=NONE guifg=#c7c7f9
+highlight Constant      gui=NONE guibg=NONE guifg=#90d0ff
+highlight Error         gui=bold guibg=NONE guifg=#ffa0af
+highlight Identifier    gui=NONE guibg=NONE guifg=#40f0f0
+highlight Ignore        gui=NONE guibg=NONE guifg=#2c2c2c
+highlight PreProc       gui=NONE guibg=NONE guifg=#40f0a0
+highlight Special       gui=NONE guibg=NONE guifg=#e0e080
+highlight Statement     gui=NONE guibg=NONE guifg=#ffa0ff
+highlight Todo          gui=bold,underline guibg=NONE guifg=#ffa0a0
+highlight Type          gui=NONE guibg=NONE guifg=#ffc864
+highlight Underlined    gui=underline guibg=NONE guifg=#f0f0f8
+highlight CursorColumn  gui=NONE guibg=NONE guifg=fg
 highlight CursorLineNr  gui=bold guibg=bg guifg=#ffff00
 
 " HTML
