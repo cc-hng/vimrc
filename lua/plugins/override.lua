@@ -21,6 +21,7 @@ return {
     opts = {
       -- colorscheme = "solarized8_high",
       -- colorscheme = "codedark",
+      colorscheme = "tokyonight",
       -- colorscheme = "tokyonight-night",
       -- colorscheme = "OceanicNext",
       -- colorscheme = "catppuccin-mocha",
@@ -34,7 +35,7 @@ return {
       -- colorscheme = "janah",
       -- colorscheme = "carbonfox",
       -- colorscheme = "nightfox",
-      colorscheme = "candy",
+      -- colorscheme = "candy",
     },
   },
 
@@ -65,9 +66,6 @@ return {
     },
   },
 
-  -- Project
-  { import = "lazyvim.plugins.extras.util.project" },
-
   -- change trouble config
   {
     "folke/trouble.nvim",
@@ -81,8 +79,7 @@ return {
     dependencies = { "hrsh7th/cmp-emoji" },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      local cmp = require("cmp")
-      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+      table.insert(opts.sources, { name = "emoji" })
     end,
   },
 
@@ -209,76 +206,35 @@ return {
   -- then: setup supertab in cmp
   {
     "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-      "L3MON4D3/LuaSnip",
-    },
-    ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-      local luasnip = require("luasnip")
       local cmp = require("cmp")
-
-      local function format_abbr(abbr, sz)
-        sz = sz or 56
-        local l = string.len(abbr)
-        if l > sz then
-          return string.sub(abbr, 1, sz) .. " ..."
-        else
-          return abbr
-        end
-      end
-
-      opts.formatting = {
-        format = function(_, item)
-          local icons = require("lazyvim.config").icons.kinds
-          if icons[item.kind] then
-            item.kind = icons[item.kind] .. item.kind
-          end
-          item.abbr = format_abbr(item.abbr, 48)
-          return item
+      opts.mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<CR>"] = LazyVim.cmp.confirm({ select = true }),
+        ["<C-y>"] = LazyVim.cmp.confirm({ select = true }),
+        ["<S-CR>"] = LazyVim.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<C-CR>"] = function(fallback)
+          cmp.abort()
+          fallback()
         end,
-      }
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<CR>"] = cmp.mapping(function(fallback)
+        ["<tab>"] = function(fallback)
           if cmp.visible() then
-            if luasnip.expandable() then
-              luasnip.expand()
-            else
-              cmp.confirm({
-                select = true,
-              })
-            end
+            return cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert })()
           else
-            fallback()
+            return LazyVim.cmp.map({ "snippet_forward", "ai_accept" }, fallback)()
           end
-        end),
-
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        end,
+        ["<S-tab>"] = function(fallback)
           if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.locally_jumpable(1) then
-            luasnip.jump(1)
+            return cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })()
           else
-            fallback()
+            return LazyVim.cmp.map({ "snippet_forward", "ai_accept" }, fallback)()
           end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
+        end,
       })
     end,
   },
