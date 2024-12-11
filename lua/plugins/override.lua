@@ -4,48 +4,23 @@
 -- * add extra plugins
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
+
 return {
-  -- add gruvbox
-  { "mhinz/vim-janah" },
-  { "challenger-deep-theme/vim" },
-  { "mhartington/oceanic-next" },
-  { "EdenEast/nightfox.nvim" },
-  { "rebelot/kanagawa.nvim" },
-  { "rakr/vim-one" },
-  { "projekt0n/github-nvim-theme" },
-  { "Rigellute/rigel" },
+  -- use mini.starter instead of alpha
+  { import = "lazyvim.plugins.extras.ui.mini-starter" },
 
-  -- Configure LazyVim to load gruvbox
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      -- colorscheme = "solarized8_high",
-      -- colorscheme = "codedark",
-      colorscheme = "tokyonight",
-      -- colorscheme = "tokyonight-night",
-      -- colorscheme = "OceanicNext",
-      -- colorscheme = "catppuccin-mocha",
-      -- colorscheme = "neon",
-      -- colorscheme = "space-vim-dark",
-      -- colorscheme = "github_dark_colorblind",
-      -- colorscheme = "kanagawa-wave",
-      -- colorscheme = "duskfox",
-      -- colorscheme = "onehalfdark",
-      -- colorscheme = "challenger_deep",
-      -- colorscheme = "janah",
-      -- colorscheme = "carbonfox",
-      -- colorscheme = "nightfox",
-      -- colorscheme = "candy",
-    },
-  },
+  -- add jsonls and schemastore packages, and setup treesitter for json, json5 and jsonc
+  { import = "lazyvim.plugins.extras.lang.json" },
 
-  -- 消除警告（背景透明的时候）
+  -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
+  -- treesitter, mason and typescript.nvim. So instead of the above, you can use:
+  { import = "lazyvim.plugins.extras.lang.typescript" },
+
+  -- change trouble config
   {
-    "rcarriga/nvim-notify",
-    opts = {
-      background_colour = "#000000",
-      stages = "fade_in_slide_out",
-    },
+    "folke/trouble.nvim",
+    -- opts will be merged with the parent spec
+    opts = { use_diagnostic_signs = true },
   },
 
   -- comments
@@ -66,23 +41,6 @@ return {
     },
   },
 
-  -- change trouble config
-  {
-    "folke/trouble.nvim",
-    -- opts will be merged with the parent spec
-    opts = { use_diagnostic_signs = true },
-  },
-
-  -- override nvim-cmp and add cmp-emoji
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji" },
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
-    end,
-  },
-
   -- change some telescope options and a keymap to browse plugin files
   {
     "nvim-telescope/telescope.nvim",
@@ -98,16 +56,15 @@ return {
     -- change some options
     opts = {
       defaults = {
-        -- layout_strategy = "horizontal",
+        layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",
-        winblend = 6,
+        winblend = 20,
         preview = { treesitter = false },
       },
     },
   },
 
-  -- add telescope-fzf-native
   {
     "telescope.nvim",
     dependencies = {
@@ -127,7 +84,8 @@ return {
       inlay_hints = { enabled = false },
       document_highlight = { enabled = true },
       servers = {
-        -- jsonls = { mason = false },
+        -- pyright will be automatically installed with mason and loaded with lspconfig
+        -- pyright = {},
       },
     },
   },
@@ -137,7 +95,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     opts = function(_, opts)
       opts.close_if_last_window = true
-      opts.enable_git_status = false
+      opts.enable_git_status = true
       opts.window = {
         width = 33,
       }
@@ -189,52 +147,94 @@ return {
     },
   },
 
+  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
+  -- would overwrite `ensure_installed` with the new value.
+  -- If you'd rather extend the default config, use the code below instead:
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      -- add tsx and treesitter
+      vim.list_extend(opts.ensure_installed, {
+        "tsx",
+        "typescript",
+      })
+    end,
+  },
+
+  -- the opts function can also be used to change the default opts:
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, {
+        function()
+          return "😄"
+        end,
+      })
+    end,
+  },
+
+  -- or you can return new options to override all the defaults
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    opts = function()
+      return {
+        --[[add your custom lualine config here]]
+      }
+    end,
+  },
+
   -- add any tools you want to have installed below
   {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         "stylua",
-        "shfmt",
         "shellcheck",
+        "shfmt",
       },
     },
   },
 
-  -- Use <tab> for completion and snippets (supertab)
-  -- first: disable default <tab> and <s-tab> behavior in LuaSnip
-  -- then: setup supertab in cmp
   {
     "hrsh7th/nvim-cmp",
+    ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
       local cmp = require("cmp")
-      opts.mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<CR>"] = LazyVim.cmp.confirm({ select = true }),
-        ["<C-y>"] = LazyVim.cmp.confirm({ select = true }),
-        ["<S-CR>"] = LazyVim.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ["<C-CR>"] = function(fallback)
-          cmp.abort()
-          fallback()
-        end,
-        ["<tab>"] = function(fallback)
+
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            return cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert })()
+            -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
+            cmp.select_next_item()
+          elseif vim.snippet.active({ direction = 1 }) then
+            vim.schedule(function()
+              vim.snippet.jump(1)
+            end)
+          elseif has_words_before() then
+            cmp.complete()
           else
-            return LazyVim.cmp.map({ "snippet_forward", "ai_accept" }, fallback)()
+            fallback()
           end
-        end,
-        ["<S-tab>"] = function(fallback)
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            return cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })()
+            cmp.select_prev_item()
+          elseif vim.snippet.active({ direction = -1 }) then
+            vim.schedule(function()
+              vim.snippet.jump(-1)
+            end)
           else
-            return LazyVim.cmp.map({ "snippet_forward", "ai_accept" }, fallback)()
+            fallback()
           end
-        end,
+        end, { "i", "s" }),
       })
     end,
   },
