@@ -138,22 +138,11 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
-      keymap = {
-        preset = "enter",
-        ["<C-y>"] = { "select_and_accept" },
-        ["<Tab>"] = {
-          "select_next",
-          function(cmp)
-            if cmp.snippet_active() then
-              return cmp.accept()
-            else
-              return cmp.select_and_accept()
-            end
-          end,
-          "snippet_forward",
-          "fallback",
+      sources = {
+        providers = {
+          snippets = { min_keyword_length = 2 },
+          buffer = { min_keyword_length = 2 },
         },
-        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
       },
     },
   },
@@ -165,4 +154,11 @@ return {
   --     -- popupmenu = { backend = "cmdline" },
   --   },
   -- },
+
+  {
+    "folke/snacks.nvim",
+    opts = {
+      indent = { enabled = false },
+    },
+  },
 }
