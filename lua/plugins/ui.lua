@@ -3,12 +3,17 @@ local bottom_height = 0.6
 return {
   -- add gruvbox
   { "ellisonleao/gruvbox.nvim" },
+  { "mhinz/vim-janah" },
+  { "challenger-deep-theme/vim" },
+  { "mhartington/oceanic-next" },
+  { "EdenEast/nightfox.nvim" },
+  { "rebelot/kanagawa.nvim" },
 
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
-      -- colorscheme = "gruvbox",
+      colorscheme = "duskfox",
     },
   },
 
