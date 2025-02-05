@@ -1,4 +1,4 @@
-local bottom_height = 0.6
+local bottom_height = 0.4
 
 return {
   -- add gruvbox
@@ -13,7 +13,10 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "duskfox",
+      colorscheme = "candy",
+      -- colorscheme = "catppuccin-macchiato",
+      -- colorscheme = "tokyonight-moon",
+      -- colorscheme = "kanagawa",
     },
   },
 
@@ -57,6 +60,11 @@ return {
             return not vim.b[buf].lazyterm_cmd
           end,
         },
+        {
+          ft = "snacks_terminal",
+          size = { height = 0.48 },
+          title = "%{b:snacks_terminal.id}: %{b:term_title}",
+        },
         "Trouble",
         { ft = "qf", title = "QuickFix" },
         {
@@ -82,7 +90,7 @@ return {
           open = function()
             vim.api.nvim_input("<esc><space>e")
           end,
-          size = { height = 0.5 },
+          size = { width = 0.2, height = 0.5 },
         },
       },
     },

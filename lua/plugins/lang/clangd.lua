@@ -13,6 +13,7 @@ return {
           },
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern(
+              ".git",
               "CMakeLists.txt",
               "Makefile",
               "configure.ac",
@@ -36,6 +37,7 @@ return {
             "--completion-style=detailed",
             "--function-arg-placeholders",
             "--fallback-style=llvm",
+            "--all-scopes-completion=false",
           },
           init_options = {
             usePlaceholders = true,
