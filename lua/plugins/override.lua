@@ -6,13 +6,6 @@
 -- * override the configuration of LazyVim plugins
 
 return {
-  -- use mini.starter instead of alpha
-  { import = "lazyvim.plugins.extras.ui.mini-starter" },
-  { import = "lazyvim.plugins.extras.vscode" },
-  { import = "lazyvim.plugins.extras.util.project" },
-  { import = "lazyvim.plugins.extras.lsp.neoconf" },
-  { import = "lazyvim.plugins.extras.coding.neogen" },
-
   -- change trouble config
   {
     "folke/trouble.nvim",
@@ -175,9 +168,5 @@ return {
         end,
       },
     },
-  },
-
-  {
-    "nvim-neo-tree/neo-tree.nvim",
   },
 }

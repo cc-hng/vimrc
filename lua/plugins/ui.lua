@@ -13,10 +13,11 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "candy",
-      -- colorscheme = "catppuccin-macchiato",
-      -- colorscheme = "tokyonight-moon",
+      -- colorscheme = "candy",
+      colorscheme = "catppuccin-macchiato",
+      -- colorscheme = "tokyonight-storm",
       -- colorscheme = "kanagawa",
+      -- colorscheme = "janah",
     },
   },
 
@@ -30,9 +31,6 @@ return {
       },
     },
   },
-
-  -- edgy
-  { import = "lazyvim.plugins.extras.ui.edgy" },
 
   {
     "folke/edgy.nvim",
