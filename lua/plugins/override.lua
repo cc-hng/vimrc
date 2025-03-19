@@ -140,14 +140,16 @@ return {
     },
   },
 
-  -- {
-  --   "folke/noice.nvim",
-  --   opts = {
-  --     cmdline = { view = "cmdline" },
-  --     -- popupmenu = { backend = "cmdline" },
-  --   },
-  -- },
+  --- cmdline settings
+  {
+    "folke/noice.nvim",
+    opts = {
+      presets = { command_palette = false },
+      cmdline = { view = "cmdline" },
+    },
+  },
 
+  --- 大文件
   {
     "folke/snacks.nvim",
     opts = {
