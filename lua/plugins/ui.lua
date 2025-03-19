@@ -1,5 +1,16 @@
 local bottom_height = 0.4
 
+local random_theme = function()
+  local set = {
+    "everforest",
+    "candy",
+    "catppuccin",
+    "janah",
+    "terafox",
+  }
+  return set[math.random(#set)]
+end
+
 return {
   -- add gruvbox
   { "ellisonleao/gruvbox.nvim" },
@@ -10,20 +21,13 @@ return {
   { "rebelot/kanagawa.nvim" },
   { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
   { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
+  { "sainnhe/everforest" },
 
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
-      -- colorscheme = "candy",
-      -- colorscheme = "catppuccin",
-      -- colorscheme = "catppuccin-macchiato",
-      -- colorscheme = "tokyonight-storm",
-      -- colorscheme = "kanagawa",
-      -- colorscheme = "janah",
-      -- colorscheme = "carbonfox",
-      -- colorscheme = "terafox",
-      colorscheme = "nightfly",
+      colorscheme = random_theme(),
     },
   },
 
