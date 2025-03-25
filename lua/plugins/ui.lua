@@ -2,13 +2,17 @@ local bottom_height = 0.4
 
 local random_theme = function()
   local set = {
-    "everforest",
     "candy",
     "catppuccin",
+    "candy",
+    "janah",
+    "tokyonight",
+    "candy",
     "janah",
     "terafox",
+    "janah",
   }
-  return set[math.random(#set)]
+  return set[os.time() % #set + 1]
 end
 
 return {

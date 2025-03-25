@@ -15,7 +15,5 @@ if vim.fn.has("nvim-0.9") == 1 then
   vim.loader.enable()
 end
 
-math.randomseed(os.time())
-
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
