@@ -19,3 +19,5 @@ if not vim.fn.has("mac") then
 end
 
 opt.signcolumn = vim.fn.has("nvim-0.5") == 1 and "number" or "no"
+
+-- vim.g.editorconfig = false

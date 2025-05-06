@@ -4,8 +4,44 @@
 -- * add extra plugins
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
+local random_theme = function()
+  local set = {
+    "candy",
+    "catppuccin",
+    "candy",
+    "janah",
+    "tokyonight",
+    "candy",
+    "janah",
+    "terafox",
+    "janah",
+  }
+  return set[os.time() % #set + 1]
+end
 
 return {
+  -- add gruvbox
+  { "ellisonleao/gruvbox.nvim" },
+  { "mhinz/vim-janah" },
+  { "challenger-deep-theme/vim" },
+  { "mhartington/oceanic-next" },
+  { "EdenEast/nightfox.nvim" },
+  { "rebelot/kanagawa.nvim" },
+  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+  { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
+  { "sainnhe/everforest" },
+
+  -- Configure LazyVim to load gruvbox
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      -- colorscheme = random_theme(),
+      -- colorscheme = "tokyonight",
+      -- colorscheme = "catppuccin",
+      colorscheme = "candy",
+    },
+  },
+
   -- change trouble config
   {
     "folke/trouble.nvim",
@@ -48,16 +84,11 @@ return {
   -- neotree
   {
     "nvim-neo-tree/neo-tree.nvim",
-    opts = function(_, opts)
-      opts.close_if_last_window = true
-      opts.enable_git_status = true
-      opts.window = {
-        width = 33,
-      }
-    end,
-    -- config = function()
-    --   vim.api.nvim_input("<esc><space>e")
-    -- end,
+    opts = {
+      close_if_last_window = true,
+      window = { width = 0.21 },
+      enable_git_status = true,
+    },
   },
 
   -- add more treesitter parsers
@@ -87,7 +118,7 @@ return {
         "yaml",
       },
       highlight = {
-        enable = false,
+        enable = true,
         disable = function(lang, buf)
           if lang == "vimdoc" or lang == "diff" or lang == "gitcommit" or lang == "swift" then
             return true
@@ -100,20 +131,6 @@ return {
         end,
       },
     },
-  },
-
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      -- add tsx and treesitter
-      vim.list_extend(opts.ensure_installed, {
-        "tsx",
-        "typescript",
-      })
-    end,
   },
 
   -- add any tools you want to have installed below
@@ -154,21 +171,7 @@ return {
     "folke/snacks.nvim",
     opts = {
       indent = { enabled = false },
-      bigfile = {
-        notify = true,
-        size = 4 * 1024 * 1024,
-        setup = function(ctx)
-          -- local snacks = require "folke/snacks.nvim"
-          if vim.fn.exists ":DoMatchParen" == 2 then
-            vim.cmd [[NoMatchParen]]
-          end
-          Snacks.util.wo(0, { foldmethod = "manual", statuscolumn = "", conceallevel = 0 })
-          vim.b.minianimate_disable = true
-          vim.schedule(function()
-            vim.bo[ctx.buf].syntax = ctx.ft
-          end)
-        end,
-      },
+      bigfile = { enabled = false },
     },
   },
 }

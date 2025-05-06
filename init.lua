@@ -15,5 +15,9 @@ if vim.fn.has("nvim-0.9") == 1 then
   vim.loader.enable()
 end
 
+-- disable diagnostic
+vim.diagnostic.enable(false)
+
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
+

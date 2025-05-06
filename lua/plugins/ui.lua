@@ -1,40 +1,6 @@
 local bottom_height = 0.4
 
-local random_theme = function()
-  local set = {
-    "candy",
-    "catppuccin",
-    "candy",
-    "janah",
-    "tokyonight",
-    "candy",
-    "janah",
-    "terafox",
-    "janah",
-  }
-  return set[os.time() % #set + 1]
-end
-
 return {
-  -- add gruvbox
-  { "ellisonleao/gruvbox.nvim" },
-  { "mhinz/vim-janah" },
-  { "challenger-deep-theme/vim" },
-  { "mhartington/oceanic-next" },
-  { "EdenEast/nightfox.nvim" },
-  { "rebelot/kanagawa.nvim" },
-  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
-  { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
-  { "sainnhe/everforest" },
-
-  -- Configure LazyVim to load gruvbox
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = random_theme(),
-    },
-  },
-
   {
     "folke/tokyonight.nvim",
     opts = {
@@ -48,6 +14,7 @@ return {
 
   {
     "folke/edgy.nvim",
+    enabled = false,
     opts = {
       bottom = {
         {

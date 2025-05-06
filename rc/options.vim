@@ -280,7 +280,7 @@ set pumheight=5
 " Set popup menu min width.
 set pumwidth=0
 " Use "/" for path completion
-set completeslash=slash
+" set completeslash=slash
 
 " Maintain a current line at the time of movement as much as possible.
 set nostartofline
