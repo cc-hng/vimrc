@@ -38,7 +38,7 @@ return {
       -- colorscheme = random_theme(),
       -- colorscheme = "tokyonight",
       -- colorscheme = "catppuccin",
-      colorscheme = "candy",
+      -- colorscheme = "candy",
     },
   },
 

@@ -20,7 +20,7 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
     -- use mini.starter instead of alpha
-    { import = "lazyvim.plugins.extras.ui.mini-starter" },
+    -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
     { import = "lazyvim.plugins.extras.vscode" },
     { import = "lazyvim.plugins.extras.util.project" },
     { import = "lazyvim.plugins.extras.coding.neogen" },
@@ -30,7 +30,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.dap.nlua" },
 
     -- edgy
-    { import = "lazyvim.plugins.extras.ui.edgy" },
+    -- { import = "lazyvim.plugins.extras.ui.edgy" },
 
     -- lsp
     { import = "lazyvim.plugins.extras.lsp.neoconf" },
