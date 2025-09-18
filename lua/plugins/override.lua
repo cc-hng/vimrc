@@ -30,13 +30,14 @@ return {
   { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
   { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
   { "sainnhe/everforest" },
+  { "gbprod/nord.nvim" },
 
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
       -- colorscheme = random_theme(),
-      -- colorscheme = "tokyonight",
+      colorscheme = "nord",
       -- colorscheme = "catppuccin",
       -- colorscheme = "candy",
     },
@@ -51,7 +52,7 @@ return {
 
   -- comments
   {
-    "echasnovski/mini.comment",
+    "nvim-mini/mini.comment",
     opts = {
       options = {
         custom_commentstring = function()
@@ -135,7 +136,7 @@ return {
 
   -- add any tools you want to have installed below
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "stylua",
@@ -170,6 +171,8 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
+      explorer = { enabled = false },
+      picker = { enabled = false },
       indent = { enabled = false },
       bigfile = { enabled = false },
     },
