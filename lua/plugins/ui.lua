@@ -1,25 +1,25 @@
 local bottom_height = 0.6
 
 return {
+
+  --- cmdline settings
   {
-    "folke/tokyonight.nvim",
+    "folke/noice.nvim",
     opts = {
-      transparent = false,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
-      },
+      presets = { command_palette = false },
+      cmdline = { view = "cmdline" },
     },
   },
 
+  --- 大文件
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    optional = false,
-    opts = function(_, opts)
-      opts.open_files_do_not_replace_types = opts.open_files_do_not_replace_types
-        or { "terminal", "Trouble", "qf", "Outline" }
-      table.insert(opts.open_files_do_not_replace_types, "edgy")
-    end,
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
+      picker = { enabled = false },
+      indent = { enabled = false },
+      bigfile = { enabled = false },
+    },
   },
 
   {
@@ -78,7 +78,7 @@ return {
           open = function()
             vim.api.nvim_input("<esc><space>e")
           end,
-          size = { width = 0.21, height = 0.5 },
+          size = { width = 0.2, height = 0.5 },
         },
       },
     },
