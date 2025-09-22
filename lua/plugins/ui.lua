@@ -16,7 +16,17 @@ return {
     "folke/snacks.nvim",
     opts = {
       explorer = { enabled = false },
-      picker = { enabled = false },
+      picker = {
+        sources = {
+          explorer = {
+            title = "explorer",
+            layout = {
+              auto_hide = { "input" }, -- 这一行控制 input 搜索框默认隐藏
+            },
+            -- 你其他 explorer 的配置也可以在这里写
+          },
+        },
+      },
       indent = { enabled = false },
       bigfile = { enabled = false },
     },

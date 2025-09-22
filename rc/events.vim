@@ -9,11 +9,10 @@ autocmd MyAutoCmd FocusLost * silent! wa
 
 autocmd MyAutoCmd BufReadPost *.nue set ft=html
 " autocmd MyAutoCmd BufEnter * set syntax=on
-" autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 500)
-" autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 1500)
-" autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 3000)
-" autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 10000)
-" autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd("color " .. (vim.api.nvim_exec("color", true))) end, 5000)
+autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 500)
+autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 3000)
+autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd [[ set syntax=on ]] end, 10000)
+autocmd MyAutoCmd BufEnter * lua vim.defer_fn(function() vim.cmd("color " .. (vim.api.nvim_exec("color", true))) end, 5000)
 
 " binary
 augroup Binary
