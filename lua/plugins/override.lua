@@ -15,6 +15,13 @@ return {
     },
   },
 
+  {
+    "folke/sidekick.nvim",
+    opts = {
+      nes = { enabled = false },
+    },
+  },
+
   -- comments
   {
     "nvim-mini/mini.comment",

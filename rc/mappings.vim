@@ -78,6 +78,7 @@ command! -range -nargs=1 AddNumbers
       \ call vimrc#add_numbers((<line2>-<line1>+1) * eval(<args>))
 
 " NOTE: Does not overwrite <ESC> behavior
+tnoremap <ESC><ESC>          <C-\><C-n>
 " if has('nvim')
 "   tnoremap jj          <C-\><C-n>
 " else
