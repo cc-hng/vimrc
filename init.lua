@@ -5,18 +5,14 @@ local function source(file)
 end
 
 source("init.vim")
-source("options.vim")
-source("mappings.vim")
 source("events.vim")
+source("mappings.vim")
 
 -- Required neovim 0.9
 -- Speed up loading Lua modules in Neovim to improve startup time.
 if vim.fn.has("nvim-0.9") == 1 then
   vim.loader.enable()
 end
-
--- disable diagnostic
--- vim.diagnostic.enable(false)
 
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")

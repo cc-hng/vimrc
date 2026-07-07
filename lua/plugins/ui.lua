@@ -1,6 +1,42 @@
-local bottom_height = 0.6
-
 return {
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = {
+        section_separators = { left = "", right = "" },
+        component_separators = { left = "", right = "" },
+      },
+      sections = {
+        --   lualine_a = { "mode" },
+        lualine_b = {},
+        --   lualine_y = {
+        --     { "filetype", separator = "|", padding = { left = 1, right = 1 } },
+        --     { "encoding", separator = "|", padding = { left = 1, right = 1 } },
+        --     { "location", padding = { left = 0, right = 1 } },
+        --   },
+        lualine_z = {
+          function()
+            return os.getenv("NAME")
+          end,
+        },
+      },
+    },
+  },
+
+  {
+    "folke/tokyonight.nvim",
+    opts = {
+      styles = {
+        comments = { italic = false },
+        keywords = { italic = false },
+      },
+    },
+  },
+
+  {
+    "catppuccin/nvim",
+    opts = { no_italic = true },
+  },
 
   --- cmdline settings
   {
@@ -12,6 +48,7 @@ return {
   },
 
   --- 大文件
+  --- layout: dropdown, default, sidebar, vscode, ivy, ivy_split, bottom, top, left, right, select, telescope, vertical
   {
     "folke/snacks.nvim",
     opts = {
@@ -19,78 +56,21 @@ return {
       picker = {
         sources = {
           explorer = {
+            auto_close = true, -- 添加这一行以在打开文件
             title = "explorer",
             layout = {
+              preset = "select",
+              layout = {
+                height = 0, -- 0 表示充满可用空间
+                row = 0, -- 从顶部开始
+              },
               auto_hide = { "input" }, -- 这一行控制 input 搜索框默认隐藏
             },
-            -- 你其他 explorer 的配置也可以在这里写
           },
         },
       },
       indent = { enabled = false },
       bigfile = { enabled = false },
-    },
-  },
-
-  {
-    "folke/edgy.nvim",
-    opts = {
-      bottom = {
-        {
-          ft = "toggleterm",
-          size = { height = bottom_height },
-          filter = function(_, win)
-            return vim.api.nvim_win_get_config(win).relative == ""
-          end,
-        },
-        {
-          ft = "noice",
-          size = { height = bottom_height },
-          filter = function(_, win)
-            return vim.api.nvim_win_get_config(win).relative == ""
-          end,
-        },
-        {
-          ft = "lazyterm",
-          title = "LazyTerm",
-          size = { height = bottom_height },
-          filter = function(buf)
-            return not vim.b[buf].lazyterm_cmd
-          end,
-        },
-        {
-          ft = "snacks_terminal",
-          size = { height = 0.48 },
-          title = "%{b:snacks_terminal.id}: %{b:term_title}",
-        },
-        "Trouble",
-        { ft = "qf", title = "QuickFix" },
-        {
-          ft = "help",
-          size = { height = 20 },
-          -- don't open help files in edgy that we're editing
-          filter = function(buf)
-            return vim.bo[buf].buftype == "help"
-          end,
-        },
-        { ft = "spectre_panel", size = { height = bottom_height } },
-        { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
-      },
-
-      left = {
-        {
-          title = "FileSystem",
-          ft = "neo-tree",
-          filter = function(buf)
-            return vim.b[buf].neo_tree_source == "filesystem"
-          end,
-          pinned = true,
-          open = function()
-            vim.api.nvim_input("<esc><space>e")
-          end,
-          size = { width = 0.2, height = 0.5 },
-        },
-      },
     },
   },
 }

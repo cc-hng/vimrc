@@ -1,16 +1,4 @@
 return {
-  -- 透明插件
-  {
-    "xiyaowong/transparent.nvim",
-    opts = {
-      extra_groups = {
-        "NeoTreeNormal",
-        "NeoTreeNormalNC",
-      },
-    },
-  },
-
-  --
   {
     "kana/vim-smartchr",
     event = "InsertCharPre",
